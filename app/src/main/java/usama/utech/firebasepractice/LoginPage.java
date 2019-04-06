@@ -22,7 +22,7 @@ public class LoginPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login_page);
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -61,24 +61,7 @@ public class LoginPage extends AppCompatActivity {
         findViewById(R.id.signup).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mAuth.createUserWithEmailAndPassword(email.getText().toString(), pass.getText().toString())
-                        .addOnCompleteListener(LoginPage.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-
-                                    Toast.makeText(getApplicationContext(), "Success",Toast.LENGTH_SHORT).show();
-
-
-                                } else {
-
-                                    Toast.makeText(getApplicationContext(), "Authentication failed.",Toast.LENGTH_SHORT).show();
-
-                                }
-
-                                // ...
-                            }
-                        });
+                startActivity(new Intent(LoginPage.this, SignupPage.class));
 
 
             }
