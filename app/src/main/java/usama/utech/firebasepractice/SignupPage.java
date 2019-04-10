@@ -22,7 +22,6 @@ import com.google.firebase.database.ValueEventListener;
 public class SignupPage extends AppCompatActivity {
 
 
-    private static final String TAG = "SignupActivity";
 
 
     EditText firstName;
@@ -70,107 +69,122 @@ public class SignupPage extends AppCompatActivity {
 
 
 
-
         findViewById(R.id.contniue_as_driver_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "Signup");
-
-                if (!validate()) {
-                return;
-            }
-
-
-
-            final String email = emailText.getText().toString();
-
-            final String password = passwordText.getText().toString();
-            String reEnterPassword = reEnterPasswordText.getText().toString();
-
-                if (!email.equals("") && !password.equals("") && !reEnterPassword.equals("") && !firstName.getText().toString().equals("") && !lastName.getText().toString().equals("") && !cnicSignup.getText().toString().equals("") && !signupProvence.getText().toString().equals("") && !signupCity.getText().toString().equals("")) {
-
-
-                    if (password.equals(reEnterPassword)) {
-
-
-                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
-
-                    ref.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if (!dataSnapshot.exists()) {
-
-                                gotoSignupPage2WithIntentData();
-                            } else {
-                                Toast.makeText(SignupPage.this, "Email exists", Toast.LENGTH_LONG).show();
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-
-
-
-
-                }
-            }
-            //gotoSignupPage2WithIntentData();
-        }
-    });
-
-
-    findViewById(R.id.contniue_as_passenger_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {  Log.d(TAG, "Signup");
-
-                if (!validate()) {
-                    return;
-                }
-
-
-
-                final String email = emailText.getText().toString();
-
-                final String password = passwordText.getText().toString();
-                String reEnterPassword = reEnterPasswordText.getText().toString();
-
-                // TODO: Implement your own gotoSignupPage2WithIntentData logic here.
-                if (!email.equals("") && !password.equals("") && !reEnterPassword.equals("") && !firstName.getText().toString().equals("") && !lastName.getText().toString().equals("") && !cnicSignup.getText().toString().equals("") && !signupProvence.getText().toString().equals("") && !signupCity.getText().toString().equals("")) {
-
-                    if (password.equals(reEnterPassword)) {
-
-
-                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
-
-                        ref.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                if (!dataSnapshot.exists()) {
-
-                                    gotoSignupPage2WithIntentData();
-                                } else {
-                                    Toast.makeText(SignupPage.this, "Email exists", Toast.LENGTH_LONG).show();
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
-
-
-
-
-                    }
-                }
-                //gotoSignupPage2WithIntentData();
+                startActivity(new Intent(getApplicationContext(),SignupPageContinueAsDriver.class));
             }
         });
 
+        findViewById(R.id.contniue_as_passenger_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),SignupPageContinueAsPassenger.class));
+            }
+        });
+
+
+//
+//        findViewById(R.id.contniue_as_driver_btn).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Log.d(TAG, "Signup");
+//
+//                if (!validate()) {
+//                return;
+//            }
+//
+//
+//
+//            final String email = emailText.getText().toString();
+//
+//            final String password = passwordText.getText().toString();
+//            String reEnterPassword = reEnterPasswordText.getText().toString();
+//
+//                if (!email.equals("") && !password.equals("") && !reEnterPassword.equals("") && !firstName.getText().toString().equals("") && !lastName.getText().toString().equals("") && !cnicSignup.getText().toString().equals("") && !signupProvence.getText().toString().equals("") && !signupCity.getText().toString().equals("")) {
+//
+//
+//                    if (password.equals(reEnterPassword)) {
+//
+//
+//                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+//
+//                    ref.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                            if (!dataSnapshot.exists()) {
+//
+//                                gotoSignupPage2WithIntentData();
+//                            } else {
+//                                Toast.makeText(SignupPage.this, "Email exists", Toast.LENGTH_LONG).show();
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                        }
+//                    });
+//
+//
+//
+//
+//                }
+//            }
+//            //gotoSignupPage2WithIntentData();
+//        }
+//    });
+//
+//
+//        findViewById(R.id.contniue_as_passenger_btn).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {  Log.d(TAG, "Signup");
+//
+//                if (!validate()) {
+//                    return;
+//                }
+//
+//
+//
+//                final String email = emailText.getText().toString();
+//
+//                final String password = passwordText.getText().toString();
+//                String reEnterPassword = reEnterPasswordText.getText().toString();
+//
+//                // TODO: Implement your own gotoSignupPage2WithIntentData logic here.
+//                if (!email.equals("") && !password.equals("") && !reEnterPassword.equals("") && !firstName.getText().toString().equals("") && !lastName.getText().toString().equals("") && !cnicSignup.getText().toString().equals("") && !signupProvence.getText().toString().equals("") && !signupCity.getText().toString().equals("")) {
+//
+//                    if (password.equals(reEnterPassword)) {
+//
+//
+//                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+//
+//                        ref.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+//                            @Override
+//                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                                if (!dataSnapshot.exists()) {
+//
+//                                    gotoSignupPage2WithIntentData();
+//                                } else {
+//                                    Toast.makeText(SignupPage.this, "Email exists", Toast.LENGTH_LONG).show();
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                            }
+//                        });
+//
+//
+//
+//
+//                    }
+//                }
+//                //gotoSignupPage2WithIntentData();
+//            }
+//        });
+//
 
 
 
@@ -181,7 +195,7 @@ public class SignupPage extends AppCompatActivity {
 
     private void gotoSignupPage2WithIntentData() {
 
-        Intent intent = new Intent(getApplicationContext(),SignupPage2.class);
+        Intent intent = new Intent(getApplicationContext(), SignupPageContinueAsDriver.class);
 
         intent.putExtra("fname",firstName.getText().toString());
         intent.putExtra("lname",lastName.getText().toString());
