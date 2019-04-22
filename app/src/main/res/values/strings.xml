@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">FireBasePractice</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="google_maps_key">AIzaSyAMxAtAhY5bSLtgyrtxgimE8xTGuwg8vpM</string>
+    <string name="title_activity_tst">Map</string>
 </resources>

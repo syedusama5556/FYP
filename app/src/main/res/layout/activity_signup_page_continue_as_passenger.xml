@@ -8,14 +8,14 @@
     android:background="@color/bg_color_grey">
 
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_signup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="Passenger Details"
         app:titleTextColor="@color/white">
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
         android:layout_width="wrap_content"

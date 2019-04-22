@@ -1,67 +1,70 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8" ?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context=".Test"
-    android:orientation="vertical">
+    tools:replace="android:appComponentFactory">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Enter Name" />
-
-    <EditText
-        android:id="@+id/name"
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:hint="" />
+        android:layout_height="match_parent"
+        android:id="@+id/map"
+        tools:context=".not_used.MapsActivity"
+        android:name="com.google.android.gms.maps.SupportMapFragment" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Enter Age" />
+    <FrameLayout
+        android:id="@+id/frame17"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <EditText
-        android:id="@+id/age"
-        android:layout_width="match_parent"
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottomAppBar"
+        style="@style/Widget.MaterialComponents.BottomAppBar"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="" />
-
-    <Button
-        android:id="@+id/addData"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add"
-       />
+        android:layout_gravity="bottom"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:backgroundTint="@color/colorPrimary"
+        app:fabAlignmentMode="end"
+        app:fabCradleRoundedCornerRadius="16.0dip"
 
 
-    <Button
-        android:id="@+id/getData"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="addSubdata"
         />
 
-    <Button
-        android:id="@+id/getSubData"
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="getsubdata"
-        />
+        app:srcCompat="@drawable/ic_add_black_24dp"
+        android:tint="@android:color/white"
+        app:elevation="3.0dip"
+        app:fabSize="normal"
+        app:layout_anchor="@+id/bottomAppBar" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout><!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"--><!--xmlns:app="http://schemas.android.com/apk/res-auto"--><!--xmlns:tools="http://schemas.android.com/tools"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--tools:context=".Test"--><!--android:orientation="vertical">-->
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/showDataTxt"
-        android:layout_width="match_parent"
-        android:layout_height="200dp" />
+    <!--<TextView--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:text="Enter Name" />-->
+
+    <!--<EditText--><!--android:id="@+id/name"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:layout_marginBottom="20dp"--><!--android:hint="" />-->
+
+    <!--<TextView--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:text="Enter Age" />-->
+
+    <!--<EditText--><!--android:id="@+id/age"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:hint="" />-->
+
+    <!--<Button--><!--android:id="@+id/addData"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:text="Add"--><!--/>-->
 
 
-    <Button
-        android:id="@+id/logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="logout"
-        android:layout_marginTop="5dp"/>
-</LinearLayout>
+    <!--<Button--><!--android:id="@+id/getData"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:text="addSubdata"--><!--/>-->
+
+    <!--<Button--><!--android:id="@+id/getSubData"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:text="getsubdata"--><!--/>-->
+
+    <!--<android.support.v7.widget.RecyclerView--><!--android:id="@+id/showDataTxt"--><!--android:layout_width="match_parent"--><!--android:layout_height="200dp" />-->
+
+
+    <!--<Button--><!--android:id="@+id/logout"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:text="logout"--><!--android:layout_marginTop="5dp"/>--><!--</LinearLayout>-->
+
