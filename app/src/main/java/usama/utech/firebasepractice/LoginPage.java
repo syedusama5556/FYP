@@ -1,5 +1,6 @@
 package usama.utech.firebasepractice;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,6 +28,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+
+import java.util.List;
 
 public class LoginPage extends AppCompatActivity {
 
@@ -40,6 +48,7 @@ public class LoginPage extends AppCompatActivity {
     Button loginButton,signupButton;
     TextView  resetpass;
     private FirebaseAuth mAuth;
+    private boolean isPermission = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,6 +58,9 @@ public class LoginPage extends AppCompatActivity {
         FirebaseApp.initializeApp(this);
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null){
+            startActivity(new Intent(getApplicationContext(), HomePageMap.class));
+        }
 
         // Write a message to the database
         database = FirebaseDatabase.getInstance();
@@ -58,6 +70,10 @@ public class LoginPage extends AppCompatActivity {
         passwordText = findViewById(R.id.pass);
         loginButton = findViewById(R.id.loginBtn);
         signupButton = findViewById(R.id.signup);
+
+        if (!requestPermission()){
+          requestPermission();
+        }
 
         resetpass.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,6 +137,50 @@ public class LoginPage extends AppCompatActivity {
         });
     }
 
+
+    private boolean requestPermission() {
+
+
+        Dexter.withActivity(this)
+                .withPermissions(
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ).withListener(new MultiplePermissionsListener() {
+            @Override public void onPermissionsChecked(MultiplePermissionsReport report) {
+
+           if (report.isAnyPermissionPermanentlyDenied()){
+               final android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(LoginPage.this);
+               dialog.setTitle("Location Permission")
+                       .setMessage("You have to give location permission!!, the app will close now")
+
+                       .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                           @Override
+                           public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                               finishAffinity();
+                           }
+                       });
+               dialog.setCancelable(false);
+               dialog.show();
+           }else {
+               isPermission = true;
+           }
+            }
+            @Override public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                token.continuePermissionRequest();
+            }
+        }).check();
+
+        return isPermission;
+    }
+
+
+
+
+
+
     public void login() {
         Log.d(TAG, "Login");
 
@@ -151,7 +211,7 @@ public class LoginPage extends AppCompatActivity {
 
                             FirebaseUser user = mAuth.getCurrentUser();
 
-                            myRef = database.getReference("Users");
+                            myRef = database.getReference("Drivers");
 
                             myRef.orderByChild("uid").equalTo(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
@@ -166,36 +226,35 @@ public class LoginPage extends AppCompatActivity {
                                             return;
 
                                         }
-                                        String username = datas.child("username").getValue().toString();
 
-                                        String uid = datas.child("uid").getValue().toString();
-                                        String email = datas.child("email").getValue().toString();
-                                        String bio = datas.child("bio").getValue().toString();
 
 
                                         SharedPreferences.Editor editor = getSharedPreferences("saveddata", MODE_PRIVATE).edit();
-                                        editor.putString("username", username);
-                                        editor.putString("status", status);
-                                        editor.putString("uid", uid);
+                                        editor.putString("currentlogitude", datas.child("currentlogitude").getValue().toString());
+                                        editor.putString("currentlatitude", datas.child("currentlatitude").getValue().toString());
+                                        editor.putString("uid", datas.child("uid").getValue().toString());
                                         editor.putString("email", email);
                                         editor.putString("isLogedin", "true");
+                                        editor.putString("type", "driver");
 
 
-                                        editor.putString("fb", datas.child("linkFacebook").getValue().toString());
-                                        editor.putString("tw", datas.child("linkTwitter").getValue().toString());
-                                        editor.putString("ins", datas.child("linkInstagram").getValue().toString());
+                                        editor.putString("gender", datas.child("gender").getValue().toString());
+                                        editor.putString("vehicaltype", datas.child("vehicaltype").getValue().toString());
+                                        editor.putString("fullname", datas.child("fullname").getValue().toString());
+                                        editor.putString("cnicno", datas.child("cnicno").getValue().toString());
+                                        editor.putString("phoneno", datas.child("phoneno").getValue().toString());
+                                        editor.putString("provence", datas.child("provence").getValue().toString());
+                                        editor.putString("city", datas.child("city").getValue().toString());
+                                        editor.putString("designetion", datas.child("designetion").getValue().toString());
+                                        editor.putString("age", datas.child("age").getValue().toString());
+                                        editor.putString("vehicalname", datas.child("vehicalname").getValue().toString());
+                                        editor.putString("vehicalnoplate", datas.child("vehicalnoplate").getValue().toString());
 
                                         editor.apply();
 
-                                        new android.os.Handler().postDelayed(
-                                                new Runnable() {
-                                                    public void run() {
-                                                        // On complete call either onLoginSuccess or onLoginFailed
-                                                        onLoginSuccess();
-                                                        // onLoginFailed();
-                                                        progressDialog.dismiss();
-                                                    }
-                                                }, 1000);
+                                        onLoginSuccess();
+                                        // onLoginFailed();
+                                        progressDialog.dismiss();
 
                                     }
                                 }
@@ -243,7 +302,7 @@ public class LoginPage extends AppCompatActivity {
 
     public void onLoginSuccess() {
         loginButton.setEnabled(true);
-        startActivity(new Intent(this, Test.class));
+        startActivity(new Intent(this, HomePageMap.class));
         finish();
     }
 

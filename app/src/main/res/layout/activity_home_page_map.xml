@@ -5,7 +5,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".Test"
+    tools:context=".HomePageMap"
     tools:replace="android:appComponentFactory">
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"

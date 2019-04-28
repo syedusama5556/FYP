@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -13,14 +14,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.FragmentActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -38,13 +36,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.karumi.dexter.Dexter;
@@ -57,10 +50,9 @@ import com.karumi.dexter.listener.single.PermissionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import usama.utech.firebasepractice.Adatpters.MyAdapter;
 import usama.utech.firebasepractice.ModelClasses.User;
 
-public class Test extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
+public class HomePageMap extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
 
 
     private EditText name;
@@ -97,10 +89,14 @@ public class Test extends AppCompatActivity implements OnMapReadyCallback, Googl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test);
+        setContentView(R.layout.activity_home_page_map);
         bottomapp = findViewById(R.id.bottomAppBar);
 
         setSupportActionBar(bottomapp);
+
+
+        // Write a message to the database
+        database = FirebaseDatabase.getInstance();
 
         if (requestSinglePermission()) {
             // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -121,6 +117,8 @@ public class Test extends AppCompatActivity implements OnMapReadyCallback, Googl
             checkLocation(); //check whether location service is enable or not in your  phone
         }
 
+
+
     }
 
 
@@ -138,7 +136,7 @@ public class Test extends AppCompatActivity implements OnMapReadyCallback, Googl
 
             if (latLng != null) {
                 mMap.clear();
-                mMap.addMarker(new MarkerOptions().position(latLng).title("Your Current Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
+                mMap.addMarker(new MarkerOptions().position(latLng).title("Your Current Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.navigation)));
                 CameraPosition cameraPosition = new CameraPosition.Builder().target(latLng).zoom(15.0f).build();
                 CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
                 mMap.moveCamera(cameraUpdate);
@@ -200,6 +198,22 @@ public class Test extends AppCompatActivity implements OnMapReadyCallback, Googl
             SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.map);
             mapFragment.getMapAsync(this);
+
+            SharedPreferences prefs = getSharedPreferences("saveddata", MODE_PRIVATE);
+            String currentlogitude = prefs.getString("currentlogitude", "");
+            String currentlatitude = prefs.getString("currentlatitude", "");
+            String uid = prefs.getString("uid", "");
+
+            myRef = database.getReference("Drivers").child(uid);
+
+            HashMap<String, String> updateLocationMap = new HashMap<>();
+            updateLocationMap.put("currentlogitude", String.valueOf(location.getLongitude()));
+            updateLocationMap.put("currentlatitude", String.valueOf(location.getLatitude()));
+
+            myRef.updateChildren((HashMap) updateLocationMap);
+
+
+
         }
 
         protected void startLocationUpdates() {
@@ -298,7 +312,7 @@ public class Test extends AppCompatActivity implements OnMapReadyCallback, Googl
 
 
                             }
-                            final AlertDialog.Builder dialog = new AlertDialog.Builder(Test.this);
+                            final AlertDialog.Builder dialog = new AlertDialog.Builder(HomePageMap.this);
                             dialog.setTitle("Location Permission")
                                     .setMessage("You have to give location permission!!, the app will close now")
 

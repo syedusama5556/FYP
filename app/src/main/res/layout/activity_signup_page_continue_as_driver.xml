@@ -41,7 +41,8 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_gravity="center_horizontal"
-                    android:background="@drawable/placeholder_user" />
+                    android:src="@drawable/placeholder_user"
+                    android:id="@+id/selectImageV"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -87,6 +88,7 @@
                     android:background="@color/color_dark_grey_edittext"
                     android:elevation="5dp"
                     android:hint="Designation"
+                    android:text="hsjdj"
                     android:padding="5dp"
                     android:textColor="@color/text_color_grey"
                     android:textColorHint="@color/text_color_grey" />
@@ -118,6 +120,7 @@
                     android:background="@color/color_dark_grey_edittext"
                     android:elevation="5dp"
                     android:hint="Age"
+                    android:text="12"
                     android:padding="5dp"
                     android:textAlignment="center"
                     android:textColor="@color/text_color_grey"
@@ -132,6 +135,7 @@
                     android:background="@color/color_dark_grey_edittext"
                     android:elevation="5dp"
                     android:hint="Vehicle Name"
+                    android:text="hushdus"
                     android:padding="5dp"
                     android:textColor="@color/text_color_grey"
                     android:textColorHint="@color/text_color_grey" />
@@ -168,6 +172,7 @@
                 android:layout_marginTop="15dp"
                 android:background="@color/color_dark_grey_edittext"
                 android:elevation="5dp"
+                android:text="dsu678"
                 android:hint="Vehicle Number Plate"
                 android:padding="5dp"
                 android:textColor="@color/text_color_grey"
@@ -181,12 +186,13 @@
             android:layout_below="@id/second_layout"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="40dp">
+            android:layout_marginTop="40dp"
+            >
 
             <Button
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-
+                android:id="@+id/signupBtnContDriver"
                 android:background="@drawable/proceed_btn_bg_green"
                 />
 
@@ -195,7 +201,7 @@
                 android:elevation="3dp"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_arrow_forward_white_24dp"/>
+                app:srcCompat="@drawable/ic_arrow_forward_white_24dp"/>
 
         </RelativeLayout>
         </LinearLayout>

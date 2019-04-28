@@ -8,6 +8,9 @@
          location permissions for the 'MyLocation' functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -41,19 +44,25 @@
         <activity
             android:name=".not_used.MapsActivity"
             android:label="@string/title_activity_maps"></activity>
-        <activity android:name=".SignupPageContinueAsDriver" />
+        <activity android:name=".SignupPageContinueAsDriver" >
+
+        </activity>
         <activity android:name=".SignupPageContinueAsPassenger" />
         <activity
             android:name=".SignupPage"
-            android:parentActivityName=".LoginPage" />
-        <activity android:name=".Test">
+            android:parentActivityName=".LoginPage" >
+
+        </activity>
+        <activity android:name=".HomePageMap">
+
+        </activity>
+        <activity android:name=".LoginPage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginPage"></activity>
     </application>
 
 </manifest>

@@ -1,13 +1,10 @@
 package usama.utech.firebasepractice;
 
 import android.content.Intent;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,9 +15,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 public class SignupPage extends AppCompatActivity {
-
-
 
 
     EditText firstName;
@@ -29,7 +27,6 @@ public class SignupPage extends AppCompatActivity {
     EditText phonenoSignup;
     EditText signupProvence;
     EditText signupCity;
-
 
 
     EditText emailText;
@@ -53,13 +50,12 @@ public class SignupPage extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
 
 
-
-        firstName= findViewById(R.id.first_name);
-        lastName= findViewById(R.id.last_name);
-        cnicSignup= findViewById(R.id.cnic_signup);
-        phonenoSignup= findViewById(R.id.phoneno_signup);
-        signupProvence= findViewById(R.id.signup_provence);
-        signupCity= findViewById(R.id.signup_city);
+        firstName = findViewById(R.id.first_name);
+        lastName = findViewById(R.id.last_name);
+        cnicSignup = findViewById(R.id.cnic_signup);
+        phonenoSignup = findViewById(R.id.phoneno_signup);
+        signupProvence = findViewById(R.id.signup_provence);
+        signupCity = findViewById(R.id.signup_city);
 
 
         emailText = findViewById(R.id.signup_email);
@@ -67,23 +63,6 @@ public class SignupPage extends AppCompatActivity {
         reEnterPasswordText = findViewById(R.id.confirm_pass_signup);
 
 
-
-        findViewById(R.id.contniue_as_driver_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),SignupPageContinueAsDriver.class));
-            }
-        });
-
-        findViewById(R.id.contniue_as_passenger_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),SignupPageContinueAsPassenger.class));
-            }
-        });
-
-
-
         findViewById(R.id.contniue_as_driver_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,10 +73,10 @@ public class SignupPage extends AppCompatActivity {
                 }
 
 
-            final String email = emailText.getText().toString();
+                final String email = emailText.getText().toString();
 
-            final String password = passwordText.getText().toString();
-            String reEnterPassword = reEnterPasswordText.getText().toString();
+                final String password = passwordText.getText().toString();
+                String reEnterPassword = reEnterPasswordText.getText().toString();
 
                 if (!email.equals("") && !password.equals("") && !reEnterPassword.equals("") && !firstName.getText().toString().equals("") && !lastName.getText().toString().equals("") && !cnicSignup.getText().toString().equals("") && !signupProvence.getText().toString().equals("") && !signupCity.getText().toString().equals("")) {
 
@@ -105,33 +84,31 @@ public class SignupPage extends AppCompatActivity {
                     if (password.equals(reEnterPassword)) {
 
 
-                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
 
-                    ref.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if (!dataSnapshot.exists()) {
+                        ref.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if (!dataSnapshot.exists()) {
 
-                                gotoSignupPage2WithIntentData();
-                            } else {
-                                Toast.makeText(SignupPage.this, "Email exists", Toast.LENGTH_LONG).show();
+                                    gotoSignupPage2WithIntentData();
+                                } else {
+                                    Toast.makeText(SignupPage.this, "Email exists", Toast.LENGTH_LONG).show();
+                                }
                             }
-                        }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                        }
-                    });
-
+                            }
+                        });
 
 
-
+                    }
                 }
+                //gotoSignupPage2WithIntentData();
             }
-            //gotoSignupPage2WithIntentData();
-        }
-    });
+        });
 
 
         findViewById(R.id.contniue_as_passenger_btn).setOnClickListener(new View.OnClickListener() {
@@ -141,7 +118,6 @@ public class SignupPage extends AppCompatActivity {
                 if (!validate()) {
                     return;
                 }
-
 
 
                 final String email = emailText.getText().toString();
@@ -174,18 +150,11 @@ public class SignupPage extends AppCompatActivity {
                         });
 
 
-
-
                     }
                 }
                 //gotoSignupPage2WithIntentData();
             }
         });
-
-
-
-
-
 
 
     }
@@ -194,20 +163,18 @@ public class SignupPage extends AppCompatActivity {
 
         Intent intent = new Intent(getApplicationContext(), SignupPageContinueAsDriver.class);
 
-        intent.putExtra("fname",firstName.getText().toString());
-        intent.putExtra("lname",lastName.getText().toString());
-        intent.putExtra("cnic",cnicSignup.getText().toString());
-        intent.putExtra("phoneno",phonenoSignup.getText().toString());
-        intent.putExtra("provence",signupProvence.getText().toString());
-        intent.putExtra("city",signupCity.getText().toString());
+        intent.putExtra("fname", firstName.getText().toString());
+        intent.putExtra("lname", lastName.getText().toString());
+        intent.putExtra("cnic", cnicSignup.getText().toString());
+        intent.putExtra("phoneno", phonenoSignup.getText().toString());
+        intent.putExtra("provence", signupProvence.getText().toString());
+        intent.putExtra("city", signupCity.getText().toString());
 
 
-        intent.putExtra("email",emailText.getText().toString());
-        intent.putExtra("pass",passwordText.getText().toString());
+        intent.putExtra("email", emailText.getText().toString());
+        intent.putExtra("pass", passwordText.getText().toString());
 
         startActivity(intent);
-
-
 
 
     }
@@ -217,13 +184,10 @@ public class SignupPage extends AppCompatActivity {
         boolean valid = true;
 
 
-
         String email = emailText.getText().toString();
 
         String password = passwordText.getText().toString();
         String reEnterPassword = reEnterPasswordText.getText().toString();
-
-
 
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
