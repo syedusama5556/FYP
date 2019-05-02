@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -49,6 +52,8 @@ import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 import usama.utech.firebasepractice.ModelClasses.User;
 
@@ -131,18 +136,64 @@ public class HomePageMap extends AppCompatActivity implements OnMapReadyCallback
             mMap.setTrafficEnabled(false);
             mMap.setIndoorEnabled(false);
             mMap.setBuildingsEnabled(false);
-          //  mMap.getUiSettings().setMyLocationButtonEnabled(true);
+            mMap.getUiSettings().setMyLocationButtonEnabled(true);
+            mMap.getUiSettings().setTiltGesturesEnabled(true);
          //   mMap.getUiSettings().setZoomControlsEnabled(true);
 
             if (latLng != null) {
                 mMap.clear();
-                mMap.addMarker(new MarkerOptions().position(latLng).title("Your Current Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.navigation)));
+              //  mMap.addMarker(new MarkerOptions().position(latLng).title("Your Current Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.navigation)));
                 CameraPosition cameraPosition = new CameraPosition.Builder().target(latLng).zoom(15.0f).build();
                 CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
-                mMap.moveCamera(cameraUpdate);
+                mMap.animateCamera(cameraUpdate);
+                mMap.setMyLocationEnabled(true);
 
             }
+
+
+            mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                @Override
+                public void onMapClick(LatLng latLng2) {
+
+                    mMap.clear();
+                    mMap.addMarker(new MarkerOptions()
+                          .position(latLng2)
+                          .title("Your Selected Location"));
+
+
+                    System.err.println("your address is "+getCompleteAddressString(latLng2.latitude,latLng2.longitude));
+
+                }
+            });
+
+
+
+
         }
+
+    private String getCompleteAddressString(double LATITUDE, double LONGITUDE) {
+        String strAdd = "";
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        try {
+            List<Address> addresses = geocoder.getFromLocation(LATITUDE, LONGITUDE, 1);
+            if (addresses != null) {
+                Address returnedAddress = addresses.get(0);
+                StringBuilder strReturnedAddress = new StringBuilder("");
+
+                for (int i = 0; i <= returnedAddress.getMaxAddressLineIndex(); i++) {
+                    strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
+                }
+                strAdd = strReturnedAddress.toString();
+                Log.w("My Current loction address", strReturnedAddress.toString());
+            } else {
+                Log.w("My Current loction address", "No Address returned!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.w("My Current loction address", "Canont get Address!");
+        }
+        return strAdd;
+    }
 
         @Override
         public void onConnected(@Nullable Bundle bundle) {
@@ -215,6 +266,8 @@ public class HomePageMap extends AppCompatActivity implements OnMapReadyCallback
 
 
         }
+
+
 
         protected void startLocationUpdates() {
             // Create the location request
@@ -342,6 +395,19 @@ public class HomePageMap extends AppCompatActivity implements OnMapReadyCallback
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.bottomappbar_menu, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == R.id.navigation_explore){
+
+
+            startActivity(new Intent(getApplicationContext(),PostYourTravel.class));
+        }
+
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

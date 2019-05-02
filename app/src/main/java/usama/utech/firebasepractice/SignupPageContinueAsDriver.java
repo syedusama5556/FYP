@@ -162,9 +162,9 @@ public class SignupPageContinueAsDriver extends AppCompatActivity {
         progressDialog.show();
 
 
-       final String email = emailText;
+        final String email = emailText;
 
-        String password = passwordTxt;
+        final String password = passwordTxt;
         String reEnterPassword = passwordTxt;
 
         // TODO: Implement your own signup logic here.
@@ -173,51 +173,60 @@ public class SignupPageContinueAsDriver extends AppCompatActivity {
             if (password.equals(reEnterPassword)) {
 
 
-                mAuth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(SignupPageContinueAsDriver.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-
-                                    // Sign in success, update UI with the signed-in user's information
-                                    user = mAuth.getCurrentUser();
-
-                                    myRef = database.getReference("Drivers");
-
-
-                                    final DatabaseReference pushref = myRef.child(user.getUid());
 
 
 
 
 
+                Uri file = Uri.fromFile(new File(selectedImgURI));
+                System.out.println("file path "+file.toString());
 
-                                    Uri file = Uri.fromFile(new File(selectedImgURI));
-                                    System.out.println("file path "+file.toString());
-
-                                    final StorageReference riversRef = mStorageRef.child("profileimages/" + user.getUid());
-
+                final StorageReference riversRef = mStorageRef.child("profileimages/" + email);
 
 
-                                    UploadTask uploadTask = riversRef.putFile(file);
 
-                                    Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                                        @Override
-                                        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                                            if (!task.isSuccessful()) {
-                                                throw task.getException();
-                                            }
+                UploadTask uploadTask = riversRef.putFile(file);
 
-                                            // Continue with the task to get the download URL
-                                            return riversRef.getDownloadUrl();
-                                        }
-                                    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Uri> task) {
-                                            if (task.isSuccessful()) {
-                                                Uri downloadUri = task.getResult();
-                                                System.err.println("Upload " + downloadUri);
-                                                if (downloadUri != null) {
+                Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                    @Override
+                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                        if (!task.isSuccessful()) {
+                            throw task.getException();
+                        }
+
+                        // Continue with the task to get the download URL
+                        return riversRef.getDownloadUrl();
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        if (task.isSuccessful()) {
+
+
+                            final Uri downloadUri = task.getResult();
+                            System.err.println("Upload " + downloadUri);
+
+
+                            if (downloadUri != null) {
+
+
+                                mAuth.createUserWithEmailAndPassword(email, password)
+                                        .addOnCompleteListener(SignupPageContinueAsDriver.this, new OnCompleteListener<AuthResult>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                                if (task.isSuccessful()) {
+
+
+                                                    // Sign in success, update UI with the signed-in user's information
+                                                    user = mAuth.getCurrentUser();
+
+                                                    myRef = database.getReference("Drivers");
+
+
+                                                 DatabaseReference pushref = myRef.child(user.getUid());
+
+
+
 
                                                     String imageStringLink = downloadUri.toString(); //YOU WILL GET THE DOWNLOAD URL HERE !!!!
                                                     System.err.println("Upload " + imageStringLink);
@@ -251,52 +260,58 @@ public class SignupPageContinueAsDriver extends AppCompatActivity {
 
 
 
+
                                                     pushref.setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                            @Override
-                                                            public void onComplete(@NonNull Task<Void> task) {
-                                                                if (task.isSuccessful()) {
-                                                                    Toast.makeText(getApplicationContext(), "Successfull", Toast.LENGTH_SHORT).show();
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            if (task.isSuccessful()) {
+                                                                Toast.makeText(getApplicationContext(), "Successfull", Toast.LENGTH_SHORT).show();
 
-                                                                    progressDialog.dismiss();
-                                                                    startActivity(new Intent(getApplicationContext(), LoginPage.class));
+                                                                progressDialog.dismiss();
+                                                                startActivity(new Intent(getApplicationContext(), LoginPage.class));
 
 
-                                                                } else {
-                                                                    Toast.makeText(getApplicationContext(), task.getException().getMessage().toString(), Toast.LENGTH_LONG).show();
-                                                                }
+                                                            } else {
+                                                                Toast.makeText(getApplicationContext(), task.getException().getMessage().toString(), Toast.LENGTH_LONG).show();
                                                             }
-                                                        });
+                                                        }
+                                                    });
 
 
+
+
+                                                } else {
+                                                    // If sign in fails, display a message to the user.
+                                                    Toast.makeText(SignupPageContinueAsDriver.this, "User Creation failed.",
+                                                            Toast.LENGTH_SHORT).show();
+                                                    progressDialog.dismiss();
 
 
                                                 }
 
-                                            } else {
-                                                progressDialog.dismiss();
-                                                Toast.makeText(getApplicationContext(), "Error Uploading", Toast.LENGTH_LONG).show();
-
+                                                // ...
                                             }
-                                        }
-                                    });
+                                        });
 
 
 
 
 
-
-                                } else {
-                                    // If sign in fails, display a message to the user.
-                                    Toast.makeText(SignupPageContinueAsDriver.this, "User Creation failed.",
-                                            Toast.LENGTH_SHORT).show();
-                                    progressDialog.dismiss();
-
-
-                                }
-
-                                // ...
                             }
-                        });
+
+                        } else {
+                            progressDialog.dismiss();
+                            Toast.makeText(getApplicationContext(), "Error Uploading", Toast.LENGTH_LONG).show();
+
+                        }
+                    }
+                });
+
+
+
+
+
+
 
 
             } else {
@@ -307,6 +322,7 @@ public class SignupPageContinueAsDriver extends AppCompatActivity {
         }
 
     }
+
 
 
     public void get_gallery_image() {

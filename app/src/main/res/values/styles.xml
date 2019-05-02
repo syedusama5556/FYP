@@ -26,6 +26,10 @@
         </item>
     </style>
 
+    <style name="toolBarTheme" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+    <item name="colorPrimary">@color/myapp_green_color</item>
+    </style>
+
     <style name="AppTheme.Dark.Dialog" parent="Theme.AppCompat.Dialog">
         <item name="colorAccent">@color/white</item>
         <item name="android:textColorPrimary">@color/iron</item>

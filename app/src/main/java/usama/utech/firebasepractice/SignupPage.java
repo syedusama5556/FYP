@@ -1,5 +1,6 @@
 package usama.utech.firebasepractice;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -72,6 +73,13 @@ public class SignupPage extends AppCompatActivity {
                     return;
                 }
 
+                final ProgressDialog progressDialog = new ProgressDialog(SignupPage.this,
+                        R.style.AppTheme_Dark_Dialog);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setMessage("Wait...");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+
 
                 final String email = emailText.getText().toString();
 
@@ -84,29 +92,47 @@ public class SignupPage extends AppCompatActivity {
                     if (password.equals(reEnterPassword)) {
 
 
-                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Drivers");
 
                         ref.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 if (!dataSnapshot.exists()) {
 
-                                    gotoSignupPage2WithIntentData();
+                                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Riders");
+
+                                    ref.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            if (!dataSnapshot.exists()) {
+                                                progressDialog.dismiss();
+                                                gotoSignupPage2WithIntentData();
+
+                                            } else {
+                                                Toast.makeText(SignupPage.this, "Email exists", Toast.LENGTH_LONG).show();
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                                            progressDialog.dismiss();
+                                        }
+                                    });
                                 } else {
+                                    progressDialog.dismiss();
                                     Toast.makeText(SignupPage.this, "Email exists", Toast.LENGTH_LONG).show();
                                 }
                             }
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                                progressDialog.dismiss();
                             }
                         });
 
 
                     }
                 }
-                //gotoSignupPage2WithIntentData();
             }
         });
 
@@ -115,9 +141,19 @@ public class SignupPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+
+
+
                 if (!validate()) {
                     return;
                 }
+
+                final ProgressDialog progressDialog = new ProgressDialog(SignupPage.this,
+                        R.style.AppTheme_Dark_Dialog);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setMessage("Wait...");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
 
 
                 final String email = emailText.getText().toString();
@@ -127,32 +163,53 @@ public class SignupPage extends AppCompatActivity {
 
                 if (!email.equals("") && !password.equals("") && !reEnterPassword.equals("") && !firstName.getText().toString().equals("") && !lastName.getText().toString().equals("") && !cnicSignup.getText().toString().equals("") && !signupProvence.getText().toString().equals("") && !signupCity.getText().toString().equals("")) {
 
+
                     if (password.equals(reEnterPassword)) {
 
 
-                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Drivers");
 
                         ref.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 if (!dataSnapshot.exists()) {
 
-                                    gotoSignupPage2WithIntentData();
+                                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Riders");
+
+                                    ref.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            if (!dataSnapshot.exists()) {
+                                                progressDialog.dismiss();
+                                                gotoSignupPage2WithIntentData2();
+
+                                            } else {
+                                                Toast.makeText(SignupPage.this, "Email exists", Toast.LENGTH_LONG).show();
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                                            progressDialog.dismiss();
+                                        }
+                                    });
                                 } else {
+                                    progressDialog.dismiss();
                                     Toast.makeText(SignupPage.this, "Email exists", Toast.LENGTH_LONG).show();
                                 }
                             }
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                                progressDialog.dismiss();
                             }
                         });
 
 
                     }
                 }
-                //gotoSignupPage2WithIntentData();
+
+
             }
         });
 
@@ -162,6 +219,26 @@ public class SignupPage extends AppCompatActivity {
     private void gotoSignupPage2WithIntentData() {
 
         Intent intent = new Intent(getApplicationContext(), SignupPageContinueAsDriver.class);
+
+        intent.putExtra("fname", firstName.getText().toString());
+        intent.putExtra("lname", lastName.getText().toString());
+        intent.putExtra("cnic", cnicSignup.getText().toString());
+        intent.putExtra("phoneno", phonenoSignup.getText().toString());
+        intent.putExtra("provence", signupProvence.getText().toString());
+        intent.putExtra("city", signupCity.getText().toString());
+
+
+        intent.putExtra("email", emailText.getText().toString());
+        intent.putExtra("pass", passwordText.getText().toString());
+
+        startActivity(intent);
+
+
+    }
+
+    private void gotoSignupPage2WithIntentData2() {
+
+        Intent intent = new Intent(getApplicationContext(), SignupPageContinueAsPassenger.class);
 
         intent.putExtra("fname", firstName.getText().toString());
         intent.putExtra("lname", lastName.getText().toString());

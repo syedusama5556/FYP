@@ -11,9 +11,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +51,7 @@ public class LoginPage extends AppCompatActivity {
     TextView  resetpass;
     private FirebaseAuth mAuth;
     private boolean isPermission = false;
+    private boolean isDriver;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,8 +61,15 @@ public class LoginPage extends AppCompatActivity {
         FirebaseApp.initializeApp(this);
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null){
+
+
+        SharedPreferences prefs = getSharedPreferences("saveddata", MODE_PRIVATE);
+        String restoredText = prefs.getString("isLogedin", "false");
+
+        if (restoredText.equals("true")){
+
             startActivity(new Intent(getApplicationContext(), HomePageMap.class));
+        finish();
         }
 
         // Write a message to the database
@@ -122,7 +132,35 @@ public class LoginPage extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                login();
+
+                //Creating the instance of PopupMenu
+                PopupMenu popup = new PopupMenu(LoginPage.this, loginButton);
+                //Inflating the Popup using xml file
+                popup.getMenuInflater().inflate(R.menu.menu_select_login_option, popup.getMenu());
+
+                //registering popup with OnMenuItemClickListener
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+
+                        switch (item.getTitle().toString()) {
+                            case "Login As Driver":
+                                isDriver=true;
+                               login();
+                                break;
+
+                            case "Login As Passenger":
+                                isDriver=false;
+                                login();
+                                break;
+
+
+                        }
+                        return true;
+                    }
+                });
+
+                popup.show();//showing popup menu
+
             }
         });
 
@@ -211,7 +249,13 @@ public class LoginPage extends AppCompatActivity {
 
                             FirebaseUser user = mAuth.getCurrentUser();
 
-                            myRef = database.getReference("Drivers");
+                            if (isDriver){
+                                myRef = database.getReference("Drivers");
+
+                            }else{
+                                myRef = database.getReference("Riders");
+
+                            }
 
                             myRef.orderByChild("uid").equalTo(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
@@ -235,10 +279,15 @@ public class LoginPage extends AppCompatActivity {
                                         editor.putString("uid", datas.child("uid").getValue().toString());
                                         editor.putString("email", email);
                                         editor.putString("isLogedin", "true");
-                                        editor.putString("type", "driver");
 
+                                        if (isDriver) {
+                                            editor.putString("type", "driver");
+                                        }else{
+                                            editor.putString("type", "rider");
 
-                                        editor.putString("gender", datas.child("gender").getValue().toString());
+                                        }
+
+                                       // editor.putString("gender", datas.child("gender").getValue().toString());
                                         editor.putString("vehicaltype", datas.child("vehicaltype").getValue().toString());
                                         editor.putString("fullname", datas.child("fullname").getValue().toString());
                                         editor.putString("cnicno", datas.child("cnicno").getValue().toString());

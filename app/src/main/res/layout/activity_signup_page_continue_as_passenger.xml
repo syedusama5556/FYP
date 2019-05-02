@@ -41,7 +41,8 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_gravity="center_horizontal"
-                    android:background="@drawable/placeholder_user" />
+                    android:id="@+id/selectImageV2"
+                    android:src="@drawable/placeholder_user" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -124,7 +125,7 @@
             <Button
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-
+                android:id="@+id/signupBtnContPassenger"
                 android:background="@drawable/proceed_btn_bg_green"
                 />
 
@@ -133,7 +134,8 @@
                 android:elevation="3dp"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_arrow_forward_white_24dp"/>
+
+                app:srcCompat="@drawable/ic_arrow_forward_white_24dp"/>
 
         </RelativeLayout>
     </LinearLayout>
