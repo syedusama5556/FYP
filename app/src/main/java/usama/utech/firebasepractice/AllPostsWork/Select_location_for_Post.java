@@ -1,4 +1,4 @@
-package usama.utech.firebasepractice;
+package usama.utech.firebasepractice.AllPostsWork;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,22 +10,20 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
+import usama.utech.firebasepractice.R;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -36,12 +34,9 @@ import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.karumi.dexter.Dexter;
@@ -51,7 +46,6 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -83,22 +77,24 @@ public class Select_location_for_Post extends AppCompatActivity implements OnMap
         setContentView(R.layout.activity_select_location_for__post);
 
         toolbar = (androidx.appcompat.widget.Toolbar)findViewById(R.id.my_toolbar);
-
-        if (getIntent().getStringExtra("start").equals("start")) {
-            toolbar.setTitle("Start Point");
-            toolbar.setSubtitle("Tap on the map to select the Location");
-        }else if (getIntent().getStringExtra("start").equals("end")){
-            toolbar.setTitle("End Point");
-            toolbar.setSubtitle("Tap on the map to select the Location");
-
-        }
-        setSupportActionBar(toolbar);
-
         autocompleteFragment = (PlaceAutocompleteFragment)getFragmentManager().findFragmentById(R.id.autocomplete_fragment);
 
 
         selectedLOcation = findViewById(R.id.endPointTx);
         confirmLocationBtn = findViewById(R.id.confirmEndPoint);
+        if (getIntent().getStringExtra("start").equals("start")) {
+            toolbar.setTitle("Start Point");
+            toolbar.setSubtitle("Tap on the map to select the Location");
+            confirmLocationBtn.setText("Confirm Start Point");
+        }else if (getIntent().getStringExtra("start").equals("end")){
+            toolbar.setTitle("End Point");
+            toolbar.setSubtitle("Tap on the map to select the Location");
+            confirmLocationBtn.setText("Confirm End Point");
+
+        }
+        setSupportActionBar(toolbar);
+
+
 
 
 
@@ -207,21 +203,21 @@ public class Select_location_for_Post extends AppCompatActivity implements OnMap
         if (latLng != null) {
          //   mMap.clear();
             //  mMap.addMarker(new MarkerOptions().position(latLng).title("Your Current Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.navigation)));
-            CameraPosition cameraPosition = new CameraPosition.Builder().target(latLng).zoom(15.0f).build();
-            CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
-            mMap.animateCamera(cameraUpdate);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    Activity#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for Activity#requestPermissions for more details.
-                    return;
-                }
-            }
+//            CameraPosition cameraPosition = new CameraPosition.Builder().target(latLng).zoom(15.0f).build();
+//            CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
+//            mMap.animateCamera(cameraUpdate);
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//                    // TODO: Consider calling
+//                    //    Activity#requestPermissions
+//                    // here to request the missing permissions, and then overriding
+//                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//                    //                                          int[] grantResults)
+//                    // to handle the case where the user grants the permission. See the documentation
+//                    // for Activity#requestPermissions for more details.
+//                    return;
+//                }
+//            }
             mMap.setMyLocationEnabled(true);
 
         }
@@ -408,7 +404,8 @@ public class Select_location_for_Post extends AppCompatActivity implements OnMap
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(),PostYourTravel.class));
+        finish();
     }
 
     private boolean requestSinglePermission() {

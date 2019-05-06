@@ -26,9 +26,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PostTravelStep2ForDriver"></activity>
-        <activity android:name=".Select_location_for_Post" />
-        <activity android:name=".PostYourTravel" />
+        <activity android:name=".AllPostsWork.PostTravelStep2ForDriver"></activity>
+        <activity android:name=".AllPostsWork.Select_location_for_Post" />
+        <activity android:name=".AllPostsWork.PostYourTravel" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

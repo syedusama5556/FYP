@@ -45,11 +45,12 @@ public class LoginPage extends AppCompatActivity {
     private static final int REQUEST_SIGNUP = 0;
     FirebaseDatabase database;
     DatabaseReference myRef;
+    private FirebaseAuth mAuth;
+
     EditText emailText;
     EditText passwordText;
     Button loginButton,signupButton;
     TextView  resetpass;
-    private FirebaseAuth mAuth;
     private boolean isPermission = false;
     private boolean isDriver;
 
@@ -282,22 +283,24 @@ public class LoginPage extends AppCompatActivity {
 
                                         if (isDriver) {
                                             editor.putString("type", "driver");
+                                            editor.putString("vehicaltype", datas.child("vehicaltype").getValue().toString());
+
+                                            editor.putString("vehicalname", datas.child("vehicalname").getValue().toString());
+                                            editor.putString("vehicalnoplate", datas.child("vehicalnoplate").getValue().toString());
+
                                         }else{
                                             editor.putString("type", "rider");
 
                                         }
 
-                                       // editor.putString("gender", datas.child("gender").getValue().toString());
-                                        editor.putString("vehicaltype", datas.child("vehicaltype").getValue().toString());
-                                        editor.putString("fullname", datas.child("fullname").getValue().toString());
+                                        editor.putString("profileimageurl", datas.child("profileimageurl").getValue().toString());
+                                         editor.putString("fullname", datas.child("fullname").getValue().toString());
                                         editor.putString("cnicno", datas.child("cnicno").getValue().toString());
                                         editor.putString("phoneno", datas.child("phoneno").getValue().toString());
                                         editor.putString("provence", datas.child("provence").getValue().toString());
                                         editor.putString("city", datas.child("city").getValue().toString());
                                         editor.putString("designetion", datas.child("designetion").getValue().toString());
                                         editor.putString("age", datas.child("age").getValue().toString());
-                                        editor.putString("vehicalname", datas.child("vehicalname").getValue().toString());
-                                        editor.putString("vehicalnoplate", datas.child("vehicalnoplate").getValue().toString());
 
                                         editor.apply();
 

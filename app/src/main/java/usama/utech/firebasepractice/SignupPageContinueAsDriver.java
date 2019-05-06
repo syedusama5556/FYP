@@ -256,6 +256,7 @@ public class SignupPageContinueAsDriver extends AppCompatActivity {
                                                     map.put("vehicaltype", vehecaleType.getSelectedItem().toString());
 
                                                     map.put("online", "true");
+                                                    map.put("locationsharing", "true");
 
 
 

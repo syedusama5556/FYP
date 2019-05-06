@@ -30,13 +30,9 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomappbar.BottomAppBar;
@@ -55,6 +51,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import usama.utech.firebasepractice.AllPostsWork.PostYourTravel;
 import usama.utech.firebasepractice.ModelClasses.User;
 
 public class HomePageMap extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
@@ -143,9 +140,9 @@ public class HomePageMap extends AppCompatActivity implements OnMapReadyCallback
             if (latLng != null) {
                 mMap.clear();
               //  mMap.addMarker(new MarkerOptions().position(latLng).title("Your Current Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.navigation)));
-                CameraPosition cameraPosition = new CameraPosition.Builder().target(latLng).zoom(15.0f).build();
-                CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
-                mMap.animateCamera(cameraUpdate);
+               // CameraPosition cameraPosition = new CameraPosition.Builder().target(latLng).zoom(15.0f).build();
+                //CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
+              //  mMap.animateCamera(cameraUpdate);
                 mMap.setMyLocationEnabled(true);
 
             }
@@ -403,7 +400,7 @@ public class HomePageMap extends AppCompatActivity implements OnMapReadyCallback
         if (item.getItemId() == R.id.navigation_explore){
 
 
-            startActivity(new Intent(getApplicationContext(),PostYourTravel.class));
+            startActivity(new Intent(getApplicationContext(), PostYourTravel.class));
         }
 
 

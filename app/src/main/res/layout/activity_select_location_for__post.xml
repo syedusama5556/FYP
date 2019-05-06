@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".Select_location_for_Post"
+    tools:context=".AllPostsWork.Select_location_for_Post"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <androidx.appcompat.widget.Toolbar
