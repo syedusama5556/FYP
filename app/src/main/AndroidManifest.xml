@@ -26,7 +26,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AllPostsWork.PostTravelStep2ForDriver"></activity>
+        <activity android:name=".AllPostsWork.ListAllPosts"></activity>
+        <activity android:name=".AllPostsWork.PostTravelStep2ForDriver" />
         <activity android:name=".AllPostsWork.Select_location_for_Post" />
         <activity android:name=".AllPostsWork.PostYourTravel" />
         <!--

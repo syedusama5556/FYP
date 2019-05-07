@@ -51,6 +51,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import usama.utech.firebasepractice.AllPostsWork.ListAllPosts;
 import usama.utech.firebasepractice.AllPostsWork.PostYourTravel;
 import usama.utech.firebasepractice.ModelClasses.User;
 
@@ -401,6 +402,12 @@ public class HomePageMap extends AppCompatActivity implements OnMapReadyCallback
 
 
             startActivity(new Intent(getApplicationContext(), PostYourTravel.class));
+        }
+
+        if (item.getItemId() == R.id.navigation_profile){
+
+
+            startActivity(new Intent(getApplicationContext(), ListAllPosts.class));
         }
 
 

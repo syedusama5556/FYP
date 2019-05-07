@@ -21,6 +21,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -77,6 +78,8 @@ public class PostYourTravel extends AppCompatActivity {
     private Button offerLiftConfirm;
 
 
+    LatLng latLngPostStart,latLngPostEnd;
+
     String date_time = "";
     int mYear;
     int mMonth;
@@ -86,8 +89,8 @@ public class PostYourTravel extends AppCompatActivity {
     int mMinute;
 
     //for time picker return time for round trip
-    int  Hour;
-    int Minute ;
+    int Hour;
+    int Minute;
 
     FirebaseDatabase database;
     DatabaseReference myRef;
@@ -303,7 +306,7 @@ public class PostYourTravel extends AppCompatActivity {
             public void onClick(View view) {
                 // Get Current Time
                 Calendar c = Calendar.getInstance();
-               Hour = c.get(Calendar.HOUR_OF_DAY);
+                Hour = c.get(Calendar.HOUR_OF_DAY);
                 Minute = c.get(Calendar.MINUTE);
 
                 // Launch Time Picker Dialog
@@ -313,8 +316,8 @@ public class PostYourTravel extends AppCompatActivity {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
-                               Hour = hourOfDay;
-                               Minute = minute;
+                                Hour = hourOfDay;
+                                Minute = minute;
 
                                 offerReturnTimetx.setText(hourOfDay + ":" + minute);
                             }
@@ -333,7 +336,7 @@ public class PostYourTravel extends AppCompatActivity {
                 if (drawable.getConstantState().equals(getResources().getDrawable(R.drawable.passenger_enabled).getConstantState())) {
 
                     riderImage.setImageResource(R.drawable.passenger_disabled);
-                }else{
+                } else {
                     riderImage.setImageResource(R.drawable.passenger_enabled);
 
                 }
@@ -348,7 +351,7 @@ public class PostYourTravel extends AppCompatActivity {
                 if (drawable.getConstantState().equals(getResources().getDrawable(R.drawable.vehicle_enabled).getConstantState())) {
 
                     vehicleImage.setImageResource(R.drawable.vehicle_disabled);
-                }else{
+                } else {
                     vehicleImage.setImageResource(R.drawable.vehicle_enabled);
 
                 }
@@ -364,10 +367,16 @@ public class PostYourTravel extends AppCompatActivity {
                 String fullname = prefs.getString("fullname", "noname");
                 String vehtype = prefs.getString("vehicaltype", "novtype");
 
+                String latstart = String.valueOf(latLngPostStart.latitude);
+                String lngstart = String.valueOf(latLngPostStart.longitude);
+
+                String latend = String.valueOf(latLngPostEnd.latitude);
+                String lngend = String.valueOf(latLngPostEnd.longitude);
+
                 Drawable drawable = riderImage.getDrawable();
                 Drawable drawabledriver = vehicleImage.getDrawable();
 
-                if (drawable.getConstantState().equals(getResources().getDrawable(R.drawable.passenger_enabled).getConstantState())){
+                if (drawable.getConstantState().equals(getResources().getDrawable(R.drawable.passenger_enabled).getConstantState())) {
 
                     final ProgressDialog progressDialog = new ProgressDialog(PostYourTravel.this,
                             R.style.AppTheme_Dark_Dialog);
@@ -380,16 +389,21 @@ public class PostYourTravel extends AppCompatActivity {
                     myRef = database.getReference("PostsAsPassenger");
 
 
-
                     DatabaseReference dbref = myRef.push();
-                    HashMap<String,String> map = new HashMap<>();
-                    map.put("id",dbref.getKey());
-                    map.put("uid",uidfromperfs);
-                    map.put("profileimgurl",profileimgurl);
-                    map.put("fullname",fullname);
+                    HashMap<String, String> map = new HashMap<>();
+                    map.put("id", dbref.getKey());
+                    map.put("uid", uidfromperfs);
+                    map.put("profileimgurl", profileimgurl);
+                    map.put("fullname", fullname);
+
+                    map.put("latstart", latstart);
+                    map.put("lngstart", lngstart);
+
+                    map.put("latend", latend);
+                    map.put("lngend", lngend);
 
                     String regulartripstring = "";
-                    if(regularTripsw.isChecked()) {
+                    if (regularTripsw.isChecked()) {
 
 
                         if (sat.isChecked()) {
@@ -423,19 +437,19 @@ public class PostYourTravel extends AppCompatActivity {
 
 
                     }
-                    map.put("regulartrip",regulartripstring);
+                    map.put("regulartrip", regulartripstring);
 
-                    map.put("startpoint",startPointTx.getText().toString());
-                    map.put("endpoint",endPointTx.getText().toString());
-                    map.put("departuredatetime",offerdeparturedate.getText().toString());
+                    map.put("startpoint", startPointTx.getText().toString());
+                    map.put("endpoint", endPointTx.getText().toString());
+                    map.put("departuredatetime", offerdeparturedate.getText().toString());
 
                     String roundtrip = "";
-                    if(offerRoundTripSw.isChecked()){
+                    if (offerRoundTripSw.isChecked()) {
 
                         roundtrip = offerReturnTimetx.getText().toString();
 
                     }
-                    map.put("roundtrip",roundtrip);
+                    map.put("roundtrip", roundtrip);
 
                     dbref.setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -453,88 +467,83 @@ public class PostYourTravel extends AppCompatActivity {
                         }
                     });
 
-                }
-
-                else if(drawabledriver.getConstantState().equals(getResources().getDrawable(R.drawable.vehicle_enabled).getConstantState())){
-
-
+                } else if (drawabledriver.getConstantState().equals(getResources().getDrawable(R.drawable.vehicle_enabled).getConstantState())) {
 
 
                     String regulartripstring = "";
-                if(regularTripsw.isChecked()) {
+                    if (regularTripsw.isChecked()) {
 
 
-                    if (sat.isChecked()) {
+                        if (sat.isChecked()) {
 
-                        regulartripstring = regulartripstring + "sat,";
+                            regulartripstring = regulartripstring + "sat,";
+                        }
+                        if (sun.isChecked()) {
+
+                            regulartripstring = regulartripstring + "sun,";
+                        }
+                        if (mon.isChecked()) {
+
+                            regulartripstring = regulartripstring + "mon,";
+                        }
+                        if (tue.isChecked()) {
+
+                            regulartripstring = regulartripstring + "tue,";
+                        }
+                        if (wed.isChecked()) {
+
+                            regulartripstring = regulartripstring + "wed,";
+                        }
+                        if (thu.isChecked()) {
+
+                            regulartripstring = regulartripstring + "thu,";
+                        }
+                        if (fri.isChecked()) {
+
+                            regulartripstring = regulartripstring + "fri,";
+                        }
+
+
                     }
-                    if (sun.isChecked()) {
 
-                        regulartripstring = regulartripstring + "sun,";
-                    }
-                    if (mon.isChecked()) {
 
-                        regulartripstring = regulartripstring + "mon,";
-                    }
-                    if (tue.isChecked()) {
+                    String startP = startPointTx.getText().toString();
+                    String endP = endPointTx.getText().toString();
+                    String depeDate = offerdeparturedate.getText().toString();
 
-                        regulartripstring = regulartripstring + "tue,";
-                    }
-                    if (wed.isChecked()) {
+                    String roundtrip = "";
+                    if (offerRoundTripSw.isChecked()) {
 
-                        regulartripstring = regulartripstring + "wed,";
-                    }
-                    if (thu.isChecked()) {
+                        roundtrip = offerReturnTimetx.getText().toString();
 
-                        regulartripstring = regulartripstring + "thu,";
-                    }
-                    if (fri.isChecked()) {
-
-                        regulartripstring = regulartripstring + "fri,";
                     }
 
+                    Intent intent = new Intent(getApplicationContext(), PostTravelStep2ForDriver.class);
 
-                }
+                    intent.putExtra("uid", uidfromperfs);
 
+                    intent.putExtra("profileimgurl", profileimgurl);
+                    intent.putExtra("fullname", fullname);
 
-               String startP = startPointTx.getText().toString();
-                String endP = endPointTx.getText().toString();
-                String depeDate = offerdeparturedate.getText().toString();
+                    intent.putExtra("regulartripstring", regulartripstring);
 
-                String roundtrip = "";
-                if(offerRoundTripSw.isChecked()){
+                    intent.putExtra("startP", startP);
+                    intent.putExtra("endP", endP);
 
-                    roundtrip = offerReturnTimetx.getText().toString();
+                    intent.putExtra("latstart", latstart);
+                    intent.putExtra("lngstart", lngstart);
 
-                }
-
-                Intent intent  = new Intent(getApplicationContext(),PostTravelStep2ForDriver.class);
-
-                    intent.putExtra("uid",uidfromperfs);
-
-                    intent.putExtra("profileimgurl",profileimgurl);
-                    intent.putExtra("fullname",fullname);
-
-                    intent.putExtra("regulartripstring",regulartripstring);
-
-                    intent.putExtra("startP",startP);
-                    intent.putExtra("endP",endP);
+                    intent.putExtra("latend", latend);
+                    intent.putExtra("lngend", lngend);
 
 
-                    intent.putExtra("depeDate",depeDate);
-                    intent.putExtra("roundtrip",roundtrip);
-                    intent.putExtra("vehicaltype",vehtype);
+                    intent.putExtra("depeDate", depeDate);
+                    intent.putExtra("roundtrip", roundtrip);
+                    intent.putExtra("vehicaltype", vehtype);
                     startActivity(intent);
 
 
                 }
-
-
-
-
-
-
-
 
 
             }
@@ -595,11 +604,19 @@ public class PostYourTravel extends AppCompatActivity {
         if (requestCode == 2) {
 
             String loc = data.getStringExtra("locationtxt");
+            String lat = data.getStringExtra("latstart");
+            String lng = data.getStringExtra("lngstart");
+
+            latLngPostStart = new LatLng(Double.parseDouble(lat),Double.parseDouble(lng));
 
             startPointTx.setText(loc + "");
         }
         if (requestCode == 3) {
             String loc = data.getStringExtra("locationtxt");
+            String lat = data.getStringExtra("latend");
+            String lng = data.getStringExtra("lngend");
+
+            latLngPostEnd = new LatLng(Double.parseDouble(lat),Double.parseDouble(lng));
 
             endPointTx.setText(loc + "");
         }

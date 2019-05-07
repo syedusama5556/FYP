@@ -67,7 +67,7 @@ public class LoginPage extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("saveddata", MODE_PRIVATE);
         String restoredText = prefs.getString("isLogedin", "false");
 
-        if (restoredText.equals("true")){
+        if (restoredText.equals("true") && mAuth != null){
 
             startActivity(new Intent(getApplicationContext(), HomePageMap.class));
         finish();

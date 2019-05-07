@@ -71,6 +71,9 @@ public class Select_location_for_Post extends AppCompatActivity implements OnMap
     private LatLng latLng;
     private boolean isPermission;
     PlaceAutocompleteFragment autocompleteFragment;
+    LatLng latlng1;
+    double lat,lng;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,14 +143,23 @@ public class Select_location_for_Post extends AppCompatActivity implements OnMap
 
                     if (getIntent().getStringExtra("start").equals("start")) {
                         Intent intent = new Intent(getApplicationContext(), PostYourTravel.class);
+
+                        System.err.println("my ad"+selectedLOcation.getText().toString()+" loct = "+latLng.latitude);
+
                         intent.putExtra("locationtxt", selectedLOcation.getText().toString() + "");
+                        intent.putExtra("latstart",lat+"");
+                        intent.putExtra("lngstart",lng+"");
 
                         setResult(2, intent);
                         finish();
                     }
                     if (getIntent().getStringExtra("start").equals("end")) {
                         Intent intent = new Intent(getApplicationContext(), PostYourTravel.class);
+
+
                         intent.putExtra("locationtxt", selectedLOcation.getText().toString() + "");
+                        intent.putExtra("latend",lat+"");
+                        intent.putExtra("lngend",lng+"");
 
                         setResult(3, intent);
                         finish();
@@ -169,6 +181,7 @@ public class Select_location_for_Post extends AppCompatActivity implements OnMap
             @Override
             public void onPlaceSelected(Place place) {
                 selectedLOcation.setText(place.getName());
+
             }
             @Override
             public void onError(Status status) {
@@ -236,6 +249,9 @@ public class Select_location_for_Post extends AppCompatActivity implements OnMap
                 System.err.println("your address is "+getCompleteAddressString(latLng2.latitude,latLng2.longitude));
 
                 selectedLOcation.setText(getCompleteAddressString(latLng2.latitude,latLng2.longitude));
+
+                lat = latLng2.latitude;
+                lng = latLng2.longitude;
 
 
 

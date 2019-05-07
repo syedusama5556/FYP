@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -26,6 +27,8 @@ public class PostTravelStep2ForDriver extends AppCompatActivity {
     String uid,profileimgurl,fullname,regulartripstring,startP,endP,depeDate,roundtrip,vehtype;
     private DatabaseReference myRef;
     private FirebaseDatabase database;
+
+    LatLng latLngPostStart,latLngPostEnd;
 
 
     private Toolbar myToolbar;
@@ -97,6 +100,12 @@ public class PostTravelStep2ForDriver extends AppCompatActivity {
                     map.put("offermessage", offmess);
                     map.put("noofpassenger", noofP);
 
+                    map.put("latstart", String.valueOf(latLngPostStart.latitude));
+                    map.put("lngstart", String.valueOf(latLngPostStart.longitude));
+
+                    map.put("latend", String.valueOf(latLngPostEnd.latitude));
+                    map.put("lngend", String.valueOf(latLngPostEnd.longitude));
+
 
                     dbref.setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -161,6 +170,15 @@ public class PostTravelStep2ForDriver extends AppCompatActivity {
 
         vehtype =  getIntent().getStringExtra("vehicaltype");
 
+        String startLat = getIntent().getStringExtra("latstart");
+        String startLng =getIntent().getStringExtra("lngstart");
+
+        latLngPostStart = new LatLng(Double.parseDouble(startLat),Double.parseDouble(startLng));
+
+        String endLat =getIntent().getStringExtra("latend");
+        String endLng = getIntent().getStringExtra("lngend");
+
+        latLngPostEnd = new LatLng(Double.parseDouble(endLat),Double.parseDouble(endLng));
 
     }
 
