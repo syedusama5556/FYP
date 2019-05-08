@@ -15,16 +15,21 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-import usama.utech.firebasepractice.ModelClasses.Posts;
+import usama.utech.firebasepractice.ModelClasses.PostDriver;
+import usama.utech.firebasepractice.ModelClasses.PostRider;
 import usama.utech.firebasepractice.R;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> {
-    private ArrayList<Posts> list = new ArrayList<>();
+    private ArrayList<PostDriver> list = new ArrayList<>();
+    private ArrayList<PostRider> listrider = new ArrayList<>();
+    boolean isDriverP = true;
 
     Context context;
 
-    public PostAdapter(Context context, ArrayList<Posts> list) {
+    public PostAdapter( Context context,ArrayList<PostDriver> list, ArrayList<PostRider> listrider, boolean isDriverP) {
         this.list = list;
+        this.listrider = listrider;
+        this.isDriverP = isDriverP;
         this.context = context;
     }
 
@@ -36,30 +41,63 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
-        Posts obj = list.get(position);
 
-        holder.mainLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        System.err.println("working "+ position);
 
-                Toast.makeText(context, "Clicked " + position, Toast.LENGTH_SHORT).show();
+        if (isDriverP) {
 
-            }
-        });
+            PostDriver obj = list.get(position);
 
-        holder.nametxt.setText(obj.getFullname());
-        holder.startpointtxt.setText(obj.getStartpoint());
-        holder.startpointtxt.setSelected(true);
+            holder.mainLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-        holder.endpointtxt.setText(obj.getEndpoint());
-        holder.endpointtxt.setSelected(true);
+                    Toast.makeText(context, "Clicked " + position, Toast.LENGTH_SHORT).show();
+
+                }
+            });
+
+            holder.nametxt.setText(obj.getFullname());
+            holder.startpointtxt.setText(obj.getStartpoint());
+            holder.startpointtxt.setSelected(true);
+
+            holder.endpointtxt.setText(obj.getEndpoint());
+            holder.endpointtxt.setSelected(true);
 
 
-        Picasso.get()
-                .load(obj.getProfileimgurl())
-                .placeholder(R.drawable.placeholder_user)
-                .error(R.drawable.ic_close)
-                .into(holder.user_profile_img_rec_post);
+            Picasso.get()
+                    .load(obj.getProfileimgurl())
+                    .placeholder(R.drawable.placeholder_user)
+                    .error(R.drawable.ic_close)
+                    .into(holder.user_profile_img_rec_post);
+
+        }else{
+
+            PostRider obj = listrider.get(position);
+
+            holder.mainLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Toast.makeText(context, "Clicked " + position, Toast.LENGTH_SHORT).show();
+
+                }
+            });
+
+            holder.nametxt.setText(obj.getFullname());
+            holder.startpointtxt.setText(obj.getStartpoint());
+            holder.startpointtxt.setSelected(true);
+
+            holder.endpointtxt.setText(obj.getEndpoint());
+            holder.endpointtxt.setSelected(true);
+
+
+            Picasso.get()
+                    .load(obj.getProfileimgurl())
+                    .placeholder(R.drawable.placeholder_user)
+                    .error(R.drawable.ic_close)
+                    .into(holder.user_profile_img_rec_post);
+        }
 
 
     }

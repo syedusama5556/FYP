@@ -1,10 +1,10 @@
 package usama.utech.firebasepractice.ModelClasses;
 
-public class Posts {
+public class PostDriver {
 
     String departuredatetime, endpoint, fullname, id, latend, latstart, lngend, lngstart, noofpassenger, offermessage, profileimgurl, regulartrip, roundtrip, startpoint, uid, vehicaltype;
 
-    public Posts(String departuredatetime, String endpoint, String fullname, String latend, String latstart, String lngend, String lngstart, String noofpassenger, String offermessage, String profileimgurl, String regulartrip, String roundtrip, String startpoint, String uid, String vehicaltype) {
+    public PostDriver(String departuredatetime, String endpoint, String fullname, String latend, String latstart, String lngend, String lngstart, String noofpassenger, String offermessage, String profileimgurl, String regulartrip, String roundtrip, String startpoint, String uid, String vehicaltype) {
         this.departuredatetime = departuredatetime;
         this.endpoint = endpoint;
         this.fullname = fullname;
@@ -22,10 +22,10 @@ public class Posts {
         this.vehicaltype = vehicaltype;
     }
 
-    public Posts() {
+    public PostDriver() {
     }
 
-    public Posts(String departuredatetime, String endpoint, String fullname, String id, String latend, String latstart, String lngend, String lngstart, String noofpassenger, String offermessage, String profileimgurl, String regulartrip, String roundtrip, String startpoint, String uid, String vehicaltype) {
+    public PostDriver(String departuredatetime, String endpoint, String fullname, String id, String latend, String latstart, String lngend, String lngstart, String noofpassenger, String offermessage, String profileimgurl, String regulartrip, String roundtrip, String startpoint, String uid, String vehicaltype) {
         this.departuredatetime = departuredatetime;
         this.endpoint = endpoint;
         this.fullname = fullname;

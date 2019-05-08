@@ -467,7 +467,8 @@ public class PostYourTravel extends AppCompatActivity {
                         }
                     });
 
-                } else if (drawabledriver.getConstantState().equals(getResources().getDrawable(R.drawable.vehicle_enabled).getConstantState())) {
+                }
+                else if (drawabledriver.getConstantState().equals(getResources().getDrawable(R.drawable.vehicle_enabled).getConstantState())) {
 
 
                     String regulartripstring = "";

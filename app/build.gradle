@@ -36,6 +36,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:16.1.0'
     implementation 'com.google.android.gms:play-services-location:16.0.0'
     implementation 'com.google.android.gms:play-services-places:16.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0-beta01'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
@@ -44,6 +45,11 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.1.0-alpha05'
     implementation 'com.github.clans:fab:1.6.4'
     implementation 'com.karumi:dexter:5.0.0'
+//tablayout
+    implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'
+    //Optional: see how to use the utility.
+    implementation 'com.ogaclejapan.smarttablayout:utils-v4:2.0.0@aar'
+
 
     //picasoo
     implementation 'com.squareup.picasso:picasso:2.71828'
