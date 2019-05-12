@@ -2,31 +2,16 @@ package usama.utech.firebasepractice.ModelClasses;
 
 public class PostDriver {
 
-    String departuredatetime, endpoint, fullname, id, latend, latstart, lngend, lngstart, noofpassenger, offermessage, profileimgurl, regulartrip, roundtrip, startpoint, uid, vehicaltype;
+    String departuredatetime,phoneno,fareamount, endpoint, fullname, id, latend, latstart, lngend, lngstart, noofpassenger, offermessage, profileimgurl, regulartrip, roundtrip, startpoint, uid, vehicaltype;
 
-    public PostDriver(String departuredatetime, String endpoint, String fullname, String latend, String latstart, String lngend, String lngstart, String noofpassenger, String offermessage, String profileimgurl, String regulartrip, String roundtrip, String startpoint, String uid, String vehicaltype) {
-        this.departuredatetime = departuredatetime;
-        this.endpoint = endpoint;
-        this.fullname = fullname;
-        this.latend = latend;
-        this.latstart = latstart;
-        this.lngend = lngend;
-        this.lngstart = lngstart;
-        this.noofpassenger = noofpassenger;
-        this.offermessage = offermessage;
-        this.profileimgurl = profileimgurl;
-        this.regulartrip = regulartrip;
-        this.roundtrip = roundtrip;
-        this.startpoint = startpoint;
-        this.uid = uid;
-        this.vehicaltype = vehicaltype;
-    }
 
     public PostDriver() {
     }
 
-    public PostDriver(String departuredatetime, String endpoint, String fullname, String id, String latend, String latstart, String lngend, String lngstart, String noofpassenger, String offermessage, String profileimgurl, String regulartrip, String roundtrip, String startpoint, String uid, String vehicaltype) {
+    public PostDriver(String departuredatetime, String phoneno, String fareamount, String endpoint, String fullname, String id, String latend, String latstart, String lngend, String lngstart, String noofpassenger, String offermessage, String profileimgurl, String regulartrip, String roundtrip, String startpoint, String uid, String vehicaltype) {
         this.departuredatetime = departuredatetime;
+        this.phoneno = phoneno;
+        this.fareamount = fareamount;
         this.endpoint = endpoint;
         this.fullname = fullname;
         this.id = id;
@@ -50,6 +35,22 @@ public class PostDriver {
 
     public void setDeparturedatetime(String departuredatetime) {
         this.departuredatetime = departuredatetime;
+    }
+
+    public String getPhoneno() {
+        return phoneno;
+    }
+
+    public void setPhoneno(String phoneno) {
+        this.phoneno = phoneno;
+    }
+
+    public String getFareamount() {
+        return fareamount;
+    }
+
+    public void setFareamount(String fareamount) {
+        this.fareamount = fareamount;
     }
 
     public String getEndpoint() {

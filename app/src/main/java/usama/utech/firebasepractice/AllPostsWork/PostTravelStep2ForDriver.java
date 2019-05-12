@@ -7,6 +7,7 @@ import usama.utech.firebasepractice.R;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -70,7 +71,9 @@ public class PostTravelStep2ForDriver extends AppCompatActivity {
                     String offmess = offermessage.getText().toString();
                     String noofP = noOfPassenger.getText().toString();
 
+                    SharedPreferences prefs = getSharedPreferences("saveddata", MODE_PRIVATE);
 
+                    String phoneno = prefs.getString("phoneno", "nophone");
 
                     final ProgressDialog progressDialog = new ProgressDialog(PostTravelStep2ForDriver.this,
                             R.style.AppTheme_Dark_Dialog);
@@ -89,6 +92,7 @@ public class PostTravelStep2ForDriver extends AppCompatActivity {
                     map.put("uid", uid);
                     map.put("profileimgurl", profileimgurl);
                     map.put("regulartrip", regulartripstring);
+                    map.put("fareamount",fareAmountEt.getText().toString());
 
                     map.put("startpoint", startP);
                     map.put("endpoint", endP);
@@ -99,6 +103,7 @@ public class PostTravelStep2ForDriver extends AppCompatActivity {
                     map.put("fullname",fullname);
                     map.put("offermessage", offmess);
                     map.put("noofpassenger", noofP);
+                    map.put("phoneno", phoneno);
 
                     map.put("latstart", String.valueOf(latLngPostStart.latitude));
                     map.put("lngstart", String.valueOf(latLngPostStart.longitude));

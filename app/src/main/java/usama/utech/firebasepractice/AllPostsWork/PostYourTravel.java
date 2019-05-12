@@ -304,25 +304,47 @@ public class PostYourTravel extends AppCompatActivity {
         offerReturnTimetx.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Get Current Time
-                Calendar c = Calendar.getInstance();
-                Hour = c.get(Calendar.HOUR_OF_DAY);
-                Minute = c.get(Calendar.MINUTE);
 
-                // Launch Time Picker Dialog
-                TimePickerDialog timePickerDialo = new TimePickerDialog(PostYourTravel.this,
-                        new TimePickerDialog.OnTimeSetListener() {
+                // Get Current Date
+                final Calendar c = Calendar.getInstance();
+                mYear = c.get(Calendar.YEAR);
+                mMonth = c.get(Calendar.MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialo = new DatePickerDialog(PostYourTravel.this,
+                        new DatePickerDialog.OnDateSetListener() {
 
                             @Override
-                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
-                                Hour = hourOfDay;
-                                Minute = minute;
+                                date_time = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
+                                //*************Call Time Picker Here ********************
 
-                                offerReturnTimetx.setText(hourOfDay + ":" + minute);
+                                // Get Current Time
+                                Calendar c = Calendar.getInstance();
+                                Hour = c.get(Calendar.HOUR_OF_DAY);
+                                Minute = c.get(Calendar.MINUTE);
+
+                                // Launch Time Picker Dialog
+                                TimePickerDialog timePickerDialo = new TimePickerDialog(PostYourTravel.this,
+                                        new TimePickerDialog.OnTimeSetListener() {
+
+                                            @Override
+                                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+
+                                                Hour = hourOfDay;
+                                                Minute = minute;
+
+                                                offerReturnTimetx.setText(date_time+", "+hourOfDay + ":" + minute);
+                                            }
+                                        }, Hour, Minute, false);
+                                timePickerDialo.show();
+
                             }
-                        }, Hour, Minute, false);
-                timePickerDialo.show();
+                        }, mYear, mMonth, mDay);
+                datePickerDialo.show();
+
+
             }
         });
 
@@ -359,13 +381,13 @@ public class PostYourTravel extends AppCompatActivity {
         });
 
         findViewById(R.id.offerLiftConfirm).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            @Override           public void onClick(View view) {
                 SharedPreferences prefs = getSharedPreferences("saveddata", MODE_PRIVATE);
                 String uidfromperfs = prefs.getString("uid", "nouid");
                 String profileimgurl = prefs.getString("profileimageurl", "noimg");
                 String fullname = prefs.getString("fullname", "noname");
                 String vehtype = prefs.getString("vehicaltype", "novtype");
+                String phoneno = prefs.getString("phoneno", "nophone");
 
                 String latstart = String.valueOf(latLngPostStart.latitude);
                 String lngstart = String.valueOf(latLngPostStart.longitude);
@@ -401,6 +423,7 @@ public class PostYourTravel extends AppCompatActivity {
 
                     map.put("latend", latend);
                     map.put("lngend", lngend);
+                    map.put("phoneno", phoneno);
 
                     String regulartripstring = "";
                     if (regularTripsw.isChecked()) {
@@ -553,6 +576,10 @@ public class PostYourTravel extends AppCompatActivity {
 
     }
 
+    void timepicker2forround()
+    {
+
+    }
     private void datePicker() {
 
         // Get Current Date

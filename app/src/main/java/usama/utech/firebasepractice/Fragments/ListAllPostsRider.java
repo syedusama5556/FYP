@@ -115,13 +115,13 @@ public class ListAllPostsRider extends Fragment {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 //to avoid nuul exception
-                list.add(new PostDriver("","","","","","","","","","","","","","","",""));
+                list.add(new PostDriver("","","","","","","","","","","","","","","","","",""));
 
 
                 PostRider value = dataSnapshot.getValue(PostRider.class);
 
                 System.err.println("value is "+value.getFullname());
-                postRiderArrayList.add(new PostRider(value.getDeparturedatetime(),value.getEndpoint(),value.getFullname(),value.getLatend(),value.getLatstart(),value.getLngend(),value.getLngstart(),value.getProfileimgurl(),value.getRegulartrip(),value.getRoundtrip(),value.getStartpoint(),value.getUid()));
+                postRiderArrayList.add(value);
                 postAdapter.notifyDataSetChanged();
             }
 

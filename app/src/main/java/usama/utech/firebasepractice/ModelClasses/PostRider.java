@@ -3,34 +3,15 @@ package usama.utech.firebasepractice.ModelClasses;
 public class PostRider {
 
 
-
-
-
-
-
-
-    String departuredatetime, endpoint, fullname, id, latend, latstart, lngend, lngstart, profileimgurl, regulartrip, roundtrip, startpoint, uid;
+    String departuredatetime, phoneno, endpoint, fullname, id, latend, latstart, lngend, lngstart, profileimgurl, regulartrip, roundtrip, startpoint, uid;
 
     public PostRider() {
     }
 
-    public PostRider(String departuredatetime, String endpoint, String fullname, String latend, String latstart, String lngend, String lngstart, String profileimgurl, String regulartrip, String roundtrip, String startpoint, String uid) {
-        this.departuredatetime = departuredatetime;
-        this.endpoint = endpoint;
-        this.fullname = fullname;
-        this.latend = latend;
-        this.latstart = latstart;
-        this.lngend = lngend;
-        this.lngstart = lngstart;
-        this.profileimgurl = profileimgurl;
-        this.regulartrip = regulartrip;
-        this.roundtrip = roundtrip;
-        this.startpoint = startpoint;
-        this.uid = uid;
-    }
 
-    public PostRider(String departuredatetime, String endpoint, String fullname, String id, String latend, String latstart, String lngend, String lngstart, String profileimgurl, String regulartrip, String roundtrip, String startpoint, String uid) {
+    public PostRider(String departuredatetime, String phoneno, String endpoint, String fullname, String id, String latend, String latstart, String lngend, String lngstart, String profileimgurl, String regulartrip, String roundtrip, String startpoint, String uid) {
         this.departuredatetime = departuredatetime;
+        this.phoneno = phoneno;
         this.endpoint = endpoint;
         this.fullname = fullname;
         this.id = id;
@@ -45,13 +26,20 @@ public class PostRider {
         this.uid = uid;
     }
 
-
     public String getDeparturedatetime() {
         return departuredatetime;
     }
 
     public void setDeparturedatetime(String departuredatetime) {
         this.departuredatetime = departuredatetime;
+    }
+
+    public String getPhoneno() {
+        return phoneno;
+    }
+
+    public void setPhoneno(String phoneno) {
+        this.phoneno = phoneno;
     }
 
     public String getEndpoint() {

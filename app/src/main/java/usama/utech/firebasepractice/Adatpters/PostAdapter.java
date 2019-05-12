@@ -1,6 +1,7 @@
 package usama.utech.firebasepractice.Adatpters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+import usama.utech.firebasepractice.AllPostsWork.ScreenAfterPostIsSelectedFromList;
 import usama.utech.firebasepractice.ModelClasses.PostDriver;
 import usama.utech.firebasepractice.ModelClasses.PostRider;
 import usama.utech.firebasepractice.R;
@@ -42,17 +44,43 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
 
+        final int pos = position;
         System.err.println("working "+ position);
 
         if (isDriverP) {
 
-            PostDriver obj = list.get(position);
+            final  PostDriver obj = list.get(position);
+
+            System.err.println("name is is "+obj.getFullname());
+            System.err.println("name 2  is  "+list.get(pos).getFullname());
+            System.err.println("driver is here");
 
             holder.mainLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
-                    Toast.makeText(context, "Clicked " + position, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(context , ScreenAfterPostIsSelectedFromList.class);
+                    intent.putExtra("departuredatetime",obj.getDeparturedatetime());
+                    intent.putExtra("endpoint",obj.getEndpoint());
+                    intent.putExtra("id",obj.getId());
+                    intent.putExtra("latend",obj.getLatend());
+                    intent.putExtra("latstart",obj.getLatstart());
+                    intent.putExtra("lngend",obj.getLngend());
+                    intent.putExtra("lngstart",obj.getLngstart());
+                    intent.putExtra("noofpassenger",obj.getNoofpassenger());
+                    intent.putExtra("offermessage",obj.getOffermessage());
+                    intent.putExtra("profileimgurl",obj.getProfileimgurl());
+                    intent.putExtra("regulartrip",obj.getRegulartrip());
+                    intent.putExtra("roundtrip",obj.getRoundtrip());
+                    intent.putExtra("startpoint",obj.getStartpoint());
+                    intent.putExtra("uid",obj.getUid());
+                    intent.putExtra("vehicaltype",obj.getVehicaltype());
+                    intent.putExtra("phoneno",obj.getPhoneno());
+                    intent.putExtra("typeOfIntent","driver");
+                    intent.putExtra("fareamount",obj.getFareamount());
+                    intent.putExtra("fullname",obj.getFullname());
+                    context.startActivity(intent);
+
 
                 }
             });
@@ -65,21 +93,39 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
             holder.endpointtxt.setSelected(true);
 
 
-            Picasso.get()
-                    .load(obj.getProfileimgurl())
-                    .placeholder(R.drawable.placeholder_user)
-                    .error(R.drawable.ic_close)
-                    .into(holder.user_profile_img_rec_post);
+
 
         }else{
 
-            PostRider obj = listrider.get(position);
+            final PostRider obj = listrider.get(position);
+
+            System.err.println("nameR is is "+obj.getFullname());
+            System.err.println("nameR 2  is  "+listrider.get(pos).getFullname());
+
+            System.err.println("rider is here");
 
             holder.mainLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
-                    Toast.makeText(context, "Clicked " + position, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(context , ScreenAfterPostIsSelectedFromList.class);
+                    intent.putExtra("departuredatetime",obj.getDeparturedatetime());
+                    intent.putExtra("endpoint",obj.getEndpoint());
+                    intent.putExtra("id",obj.getId());
+                    intent.putExtra("latend",obj.getLatend());
+                    intent.putExtra("latstart",obj.getLatstart());
+                    intent.putExtra("lngend",obj.getLngend());
+                    intent.putExtra("lngstart",obj.getLngstart());
+                    intent.putExtra("profileimgurl",obj.getProfileimgurl());
+                    intent.putExtra("regulartrip",obj.getRegulartrip());
+                    intent.putExtra("roundtrip",obj.getRoundtrip());
+                    intent.putExtra("startpoint",obj.getStartpoint());
+                    intent.putExtra("uid",obj.getUid());
+                    intent.putExtra("phoneno",obj.getPhoneno());
+                    intent.putExtra("typeOfIntent","passenger");
+                    intent.putExtra("fullname",obj.getFullname());
+
+                    context.startActivity(intent);
 
                 }
             });
@@ -104,7 +150,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
 
     @Override
     public int getItemCount() {
-        return list.size();
+
+        if (isDriverP) {
+            return list.size();
+
+        }else {
+            return listrider.size();
+
+        }
+
+
     }
 
     @Override

@@ -170,7 +170,8 @@
   <color name="myapp_blue_text_color">#d5283599</color>
   <color name="myapp_button_gray_disabled_color">#77a9a9a9</color>
   <color name="myapp_chat_background_color">#ff00bfff</color>
-  <color name="myapp_green_color">#ff32cd32</color>
+  <!--<color name="myapp_green_color">#ff32cd32</color>-->
+  <color name="myapp_green_color">@color/btn_bg_color_green</color>
   <color name="myapp_lightblue_text_color">#d5a82eea</color>
   <color name="myapp_suggestions_text_color">#d54aadf4</color>
   <color name="myapp_white_color">#ffffffff</color>
@@ -214,5 +215,15 @@
   <color name="wallet_holo_blue_light">#ff33b5e5</color>
   <color name="wallet_link_text_light">#ff0000ee</color>
 
+
+  <!--new colors-->
+  <color name="primary1">#00BCD4</color>
+  <color name="primary_dark1">#0097A7</color>
+  <color name="primary_light1">#B2EBF2</color>
+  <color name="accent1">#607D8B</color>
+  <color name="primary_text1">#212121</color>
+  <color name="secondary_text1">#727272</color>
+  <color name="icons1">#FFFFFF</color>
+  <color name="divider1">#B6B6B6</color>
 
 </resources>

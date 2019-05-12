@@ -109,7 +109,7 @@ public class ListAllPostsDriver extends Fragment {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 //to avoid nuul exception
-                listrider.add(new PostRider("","","","","","","","","","","",""));
+                listrider.add(new PostRider("","","","","","","","","","","","","",""));
 
 
                 PostDriver value = dataSnapshot.getValue(PostDriver.class);
