@@ -1,6 +1,8 @@
 package usama.utech.firebasepractice.AllPostsWork;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -75,6 +77,7 @@ public class ScreenAfterPostIsSelectedFromList extends AppCompatActivity impleme
     private TextView offermessageDetailsTx;
 
 
+    String nameOfCurrentLoginUser,phoneNoOfCurrentLoginUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +99,11 @@ public class ScreenAfterPostIsSelectedFromList extends AppCompatActivity impleme
             }
 
         }
+
+
+        SharedPreferences prefs = getSharedPreferences("saveddata", MODE_PRIVATE);
+        nameOfCurrentLoginUser = prefs.getString("fullname", "");
+        phoneNoOfCurrentLoginUser = prefs.getString("phoneno", "");
 
 
 
@@ -343,13 +351,25 @@ public class ScreenAfterPostIsSelectedFromList extends AppCompatActivity impleme
                 //TODO implement
                 break;
             case R.id.call_bt:
-                //TODO implement
+
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:"+phoneno));//change the number.
+                startActivity(callIntent);
+
                 break;
             case R.id.send_request:
                 //TODO implement
                 break;
             case R.id.sms_bt:
-                //TODO implement
+                String message = "Hello iRide User,\n\nThis is to inform you that "+nameOfCurrentLoginUser+" wants to share ride with you," +
+                        " if you wish to do the same kindly respond to him on his contact no ("+phoneNoOfCurrentLoginUser+") \n\nThank You \niRide Pakistan";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse("smsto:"));
+                i.setType("vnd.android-dir/mms-sms");
+                i.putExtra("address", phoneno);
+                i.putExtra("sms_body",message);
+                startActivity(Intent.createChooser(i, "Send sms via:"));
+
                 break;
             case R.id.check_route_bt:
 

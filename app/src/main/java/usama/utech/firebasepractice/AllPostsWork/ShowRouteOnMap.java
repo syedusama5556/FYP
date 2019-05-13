@@ -107,9 +107,6 @@ public class ShowRouteOnMap extends FragmentActivity implements OnMapReadyCallba
                         Toast.makeText(ShowRouteOnMap.this, "Success", Toast.LENGTH_SHORT).show();
 
 
-                        CameraPosition cameraPosition = new CameraPosition.Builder().target(start).zoom(15.0f).build();
-                        CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
-                       mMap.animateCamera(cameraUpdate);
 
 
 
@@ -134,6 +131,10 @@ public class ShowRouteOnMap extends FragmentActivity implements OnMapReadyCallba
                             polylines.add(polyline);
 
                             Toast.makeText(getApplicationContext(),"Route "+ (i+1) +": distance - "+ route.get(i).getDistanceValue()+": duration - "+ route.get(i).getDurationValue(),Toast.LENGTH_SHORT).show();
+
+
+
+
                         }
 
                         // Start marker
@@ -144,7 +145,10 @@ public class ShowRouteOnMap extends FragmentActivity implements OnMapReadyCallba
                      mMap.addMarker(new MarkerOptions().position(end).title("End Point"));
 
 
-                        mMap.animateCamera(CameraUpdateFactory.newLatLng(start));
+                        CameraPosition cameraPosition = new CameraPosition.Builder().target(start).zoom(13.0f).build();
+                        CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
+                        mMap.animateCamera(cameraUpdate);
+
                     }
 
                     @Override

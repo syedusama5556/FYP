@@ -1,6 +1,7 @@
 package usama.utech.firebasepractice.Fragments;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -27,6 +28,8 @@ import usama.utech.firebasepractice.Adatpters.PostAdapter;
 import usama.utech.firebasepractice.ModelClasses.PostDriver;
 import usama.utech.firebasepractice.ModelClasses.PostRider;
 import usama.utech.firebasepractice.R;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,7 +59,7 @@ public class ListAllPostsDriver extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    String currentUserUid="";
     private OnFragmentInteractionListener mListener;
 
     public ListAllPostsDriver() {
@@ -95,6 +98,8 @@ public class ListAllPostsDriver extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_all_posts_driver, container, false);
 
+        SharedPreferences prefs = getActivity().getSharedPreferences("saveddata", MODE_PRIVATE);
+        currentUserUid = prefs.getString("uid", "");
 
 
         recyclerView = view.findViewById(R.id.rec_posts_list_all_posts);
@@ -108,13 +113,18 @@ public class ListAllPostsDriver extends Fragment {
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//to avoid nuul exception
+
+                //to avoid nuul exception
                 listrider.add(new PostRider("","","","","","","","","","","","","",""));
 
 
                 PostDriver value = dataSnapshot.getValue(PostDriver.class);
-                postDriverArrayList.add(value);
-                postAdapter.notifyDataSetChanged();
+
+                if (!currentUserUid.equals(value.getUid())) {
+                    postDriverArrayList.add(value);
+                    postAdapter.notifyDataSetChanged();
+                }
+
             }
 
             @Override

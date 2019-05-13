@@ -1,6 +1,7 @@
 package usama.utech.firebasepractice.Fragments;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -27,6 +28,8 @@ import usama.utech.firebasepractice.Adatpters.PostAdapter;
 import usama.utech.firebasepractice.ModelClasses.PostDriver;
 import usama.utech.firebasepractice.ModelClasses.PostRider;
 import usama.utech.firebasepractice.R;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,6 +66,7 @@ public class ListAllPostsRider extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+     String currentUserUid;
 
     public ListAllPostsRider() {
         // Required empty public constructor
@@ -102,6 +106,8 @@ public class ListAllPostsRider extends Fragment {
         View view = inflater.inflate(R.layout.fragment_list_all_posts_rider, container, false);
 
 
+        SharedPreferences prefs = getActivity().getSharedPreferences("saveddata", MODE_PRIVATE);
+        currentUserUid = prefs.getString("uid", "");
 
         recyclerView = view.findViewById(R.id.rec_posts_list_all_posts_Rider);
 
@@ -120,9 +126,10 @@ public class ListAllPostsRider extends Fragment {
 
                 PostRider value = dataSnapshot.getValue(PostRider.class);
 
-                System.err.println("value is "+value.getFullname());
-                postRiderArrayList.add(value);
-                postAdapter.notifyDataSetChanged();
+                if (!currentUserUid.equals(value.getUid())) {
+                    postRiderArrayList.add(value);
+                    postAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override
