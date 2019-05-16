@@ -153,13 +153,13 @@ public class HomePageMap extends AppCompatActivity implements OnMapReadyCallback
                 @Override
                 public void onMapClick(LatLng latLng2) {
 
-                    mMap.clear();
-                    mMap.addMarker(new MarkerOptions()
-                          .position(latLng2)
-                          .title("Your Selected Location"));
-
-
-                    System.err.println("your address is "+getCompleteAddressString(latLng2.latitude,latLng2.longitude));
+//                    mMap.clear();
+//                    mMap.addMarker(new MarkerOptions()
+//                          .position(latLng2)
+//                          .title("Your Selected Location"));
+//
+//
+//                    System.err.println("your address is "+getCompleteAddressString(latLng2.latitude,latLng2.longitude));
 
                 }
             });

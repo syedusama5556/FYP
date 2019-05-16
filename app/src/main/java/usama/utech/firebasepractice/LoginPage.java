@@ -42,6 +42,7 @@ public class LoginPage extends AppCompatActivity {
 
 
     private static final String TAG = "LoginActivity";
+    public int test = 9;
     private static final int REQUEST_SIGNUP = 0;
     FirebaseDatabase database;
     DatabaseReference myRef;
