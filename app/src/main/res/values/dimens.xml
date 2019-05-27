@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-   <dimen name="acitvity_paddding">5.0dip</dimen>
+    <dimen name="acitvity_paddding">5.0dip</dimen>
     <dimen name="activity_horizontal_margin">10.0dip</dimen>
     <dimen name="activity_vertical_margin">10.0dip</dimen>
     <dimen name="book_ride_day_medium">40.0dip</dimen>
@@ -212,4 +212,5 @@
     <dimen name="profile_width">75.0dip</dimen>
     <dimen name="sms_verification_padding">25.0dip</dimen>
     <dimen name="want_Large">30.0sp</dimen>
+    <dimen name="nav_header_height">176dp</dimen>
 </resources>

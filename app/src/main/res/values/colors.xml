@@ -31,6 +31,34 @@
 
   <!--new colours-->
 
+
+  <color name="colorTitleBar">#0AB5F5</color>
+  <color name="colorPurple">#8477FF</color>
+  <color name="colorPurplesh">#808477FF</color>
+  <color name="colorLightBlue1">#6ECCFC</color>
+  <color name="colorLightBluesh">#806ECCFC</color>
+  <color name="colorLightGreen">#0AE299</color>
+  <color name="colorLightGreensh">#800AE299</color>
+  <color name="colorOrange1">#FEB84F</color>
+  <color name="colorOrangesh">#80FEB84F</color>
+  <color name="colorRed">#EE5858</color>
+  <color name="colorRedsh">#80EE5858</color>
+  <color name="colorPink">#CD57EF</color>
+  <color name="colorPinksh">#80CD57EF</color>
+  <color name="colorDarkBlue">#2699FB</color>
+  <color name="colorWhite">#FFFFFF</color>
+  <color name="colorStartColor">#2189BC</color>
+  <color name="colorTextgray">#95989A</color>
+  <color name="colorTextblack">#111111</color>
+  <color name="colorTextgray2">#3A3F43</color>
+  <color name="colorBorder">#5C6A78</color>
+  <color name="colorbtnSend">#65D8F1</color>
+  <color name="colorTabv">#F1F9FF</color>
+  <color name="colorTabtxt">#BCE0FD</color>
+  <color name="colorTxtbox">#AEB1B3</color>
+  <color name="colorpiechart">#3366CC</color>
+  <color name="colorbarchartorange">#FEC667</color>
+
   <color name="abc_input_method_navigation_guard">@android:color/black</color>
   <color name="abc_search_url_text_normal">#ff7fa87f</color>
   <color name="abc_search_url_text_pressed">@android:color/black</color>

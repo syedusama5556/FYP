@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+
+        <item
+            android:id="@+id/dashboardMenu"
+            android:icon="@drawable/ic_person_black_24dp"
+            android:title="Profile" />
+        <item
+            android:id="@+id/findserviceMenu"
+            android:icon="@drawable/ic_person_black_24dp"
+            android:title="Find Service" />
+        <item
+            android:id="@+id/profilesettingMenu"
+            android:icon="@drawable/ic_person_black_24dp"
+            android:title="Profile Setting" />
+        <item
+            android:id="@+id/contactMenu"
+            android:icon="@drawable/ic_person_black_24dp"
+            android:title="Contact Us" />
+        <item
+            android:id="@+id/logoutMenu"
+            android:icon="@drawable/ic_add_black_24dp"
+            android:title="Logout" />
+
+
+
+
+
+</menu>
