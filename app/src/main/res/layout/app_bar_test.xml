@@ -36,14 +36,14 @@
         />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab2"
+        android:id="@+id/fab_homepage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:tint="@android:color/white"
         app:elevation="3.0dip"
         app:fabSize="normal"
         app:layout_anchor="@+id/bottomAppBar"
-        app:srcCompat="@drawable/ic_add_black_24dp" />
+        app:srcCompat="@drawable/ic_add_post"
+        />
 
 
 

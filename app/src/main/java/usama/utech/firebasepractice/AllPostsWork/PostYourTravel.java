@@ -624,6 +624,11 @@ public class PostYourTravel extends AppCompatActivity {
         timePickerDialog.show();
     }
 
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(), HomePageMap.class));
+        finish();
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

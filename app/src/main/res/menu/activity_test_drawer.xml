@@ -6,12 +6,12 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/profileMenu"
-            android:icon="@drawable/ic_person_black_24dp"
-            android:title="Profile" />
+            android:icon="@drawable/ic_person_new"
+            android:title="My Profile" />
         <item
             android:id="@+id/findserviceMenu"
-            android:icon="@drawable/ic_person_black_24dp"
-            android:title="Find Service" />
+            android:icon="@drawable/ic_post_travel"
+            android:title="Post Your Travel" />
         <item
             android:id="@+id/profilesettingMenu"
             android:icon="@drawable/ic_person_black_24dp"
@@ -22,7 +22,7 @@
             android:title="Contact Us" />
         <item
             android:id="@+id/logoutMenu"
-            android:icon="@drawable/ic_add_black_24dp"
+            android:icon="@drawable/ic_logout_black_24dp"
             android:title="Logout" />
     </group>
 

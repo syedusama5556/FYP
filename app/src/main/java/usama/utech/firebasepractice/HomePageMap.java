@@ -46,6 +46,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -66,6 +67,7 @@ import java.util.Locale;
 import usama.utech.firebasepractice.AllPostsWork.ListAllPosts;
 import usama.utech.firebasepractice.AllPostsWork.PostYourTravel;
 import usama.utech.firebasepractice.ModelClasses.User;
+import usama.utech.firebasepractice.ProfilePageStuff.ProfilePage;
 
 public class HomePageMap extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, NavigationView.OnNavigationItemSelectedListener {
 
@@ -75,6 +77,8 @@ public class HomePageMap extends AppCompatActivity implements OnMapReadyCallback
     private Button addData;
     private Button getData;
     private RecyclerView showDataTxt;
+
+    FloatingActionButton fab_homepage;
 
 
     ///navigasstion
@@ -148,6 +152,8 @@ public class HomePageMap extends AppCompatActivity implements OnMapReadyCallback
 
         }
 
+        fab_homepage = (FloatingActionButton) findViewById(R.id.fab_homepage);
+
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -181,7 +187,6 @@ public class HomePageMap extends AppCompatActivity implements OnMapReadyCallback
             TypeUserTxt.setText(type_user);
 
 
-
         } else if (type_user.equals("driver")) {
             EmailUserTxt.setText(email_user);
             TypeUserTxt.setText(type_user);
@@ -192,9 +197,15 @@ public class HomePageMap extends AppCompatActivity implements OnMapReadyCallback
                     .into(ImageViewNav);
 
 
-
-
         }
+
+        fab_homepage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), PostYourTravel.class));
+                finish();
+            }
+        });
 
 
     }
@@ -489,7 +500,6 @@ public class HomePageMap extends AppCompatActivity implements OnMapReadyCallback
         if (item.getItemId() == R.id.navigation_explore) {
 
 
-            startActivity(new Intent(getApplicationContext(), PostYourTravel.class));
         }
 
         if (item.getItemId() == R.id.navigation_profile) {
@@ -497,7 +507,10 @@ public class HomePageMap extends AppCompatActivity implements OnMapReadyCallback
 
             startActivity(new Intent(getApplicationContext(), ListAllPosts.class));
         }
+        if (item.getItemId() == R.id.navigation_profile22) {
 
+
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -511,9 +524,11 @@ public class HomePageMap extends AppCompatActivity implements OnMapReadyCallback
         int id = item.getItemId();
 
         if (id == R.id.profileMenu) {
-            Toast.makeText(this, "profileMenu", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(getApplicationContext(), ProfilePage.class));
+            finish();
         } else if (id == R.id.findserviceMenu) {
-            Toast.makeText(this, "findserviceMenu", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(getApplicationContext(), PostYourTravel.class));
+            finish();
 
         } else if (id == R.id.profilesettingMenu) {
             Toast.makeText(this, "profilesettingMenu", Toast.LENGTH_SHORT).show();
@@ -522,7 +537,47 @@ public class HomePageMap extends AppCompatActivity implements OnMapReadyCallback
             Toast.makeText(this, "contactMenu", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.logoutMenu) {
-            Toast.makeText(this, "logoutMenu", Toast.LENGTH_SHORT).show();
+
+
+            SharedPreferences prefs = getSharedPreferences("saveddata", MODE_PRIVATE);
+
+            type_user = prefs.getString("type", "");
+
+
+            SharedPreferences.Editor editor = getSharedPreferences("saveddata", MODE_PRIVATE).edit();
+            editor.putString("currentlogitude", "");
+            editor.putString("currentlatitude", "");
+            editor.putString("uid", "");
+            editor.putString("email", "");
+            editor.putString("isLogedin", "false");
+
+            if (type_user.equals("driver")) {
+                editor.putString("type", "");
+                editor.putString("vehicaltype", "");
+
+                editor.putString("vehicalname", "");
+                editor.putString("vehicalnoplate", "");
+
+            }
+
+            editor.putString("profileimageurl", "");
+            editor.putString("fullname", "");
+            editor.putString("cnicno", "");
+            editor.putString("phoneno", "");
+            editor.putString("provence", "");
+            editor.putString("city", "");
+            editor.putString("designetion", "");
+            editor.putString("age", "");
+
+            editor.apply();
+
+            Toast.makeText(this, "Logged Out Successful", Toast.LENGTH_SHORT).show();
+
+            if (mAuth != null) {
+                mAuth.signOut();
+            }
+            startActivity(new Intent(getApplicationContext(), LoginPage.class));
+
 
         } else if (id == R.id.nav_shareNav) {
             Toast.makeText(this, "nav_shareNav", Toast.LENGTH_SHORT).show();
