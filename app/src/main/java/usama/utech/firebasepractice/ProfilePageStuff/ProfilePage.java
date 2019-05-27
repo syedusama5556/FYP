@@ -2,23 +2,36 @@ package usama.utech.firebasepractice.ProfilePageStuff;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.mikhaellopez.circularimageview.CircularImageView;
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 import com.squareup.picasso.Picasso;
+
 
 import usama.utech.firebasepractice.HomePageMap;
 import usama.utech.firebasepractice.R;
 
-public class ProfilePage extends AppCompatActivity {
+public class ProfilePage extends AppCompatActivity implements
+        MySentRequests.OnFragmentInteractionListener,
+        MyAddedPosts.OnFragmentInteractionListener{
+
+
+
+
     CircularImageView circularImageView;
     CollapsingToolbarLayout collapsingToolbarLayout;
     Toolbar app_toolbar;
@@ -62,6 +75,38 @@ TextView UserNameTxt,TypeUserTxt,EmailUserTxt;
                     f = 0.0f;
                 }
                 circularImagev.setScaleY(f);
+            }
+        });
+
+
+
+
+
+        FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
+                getSupportFragmentManager(), FragmentPagerItems.with(this)
+                .add("My Posts", MyAddedPosts.class)
+                .add("My Requests", MySentRequests.class)
+                .create());
+
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager_profilepage);
+        viewPager.setAdapter(adapter);
+
+        SmartTabLayout viewPagerTab = (SmartTabLayout) findViewById(R.id.viewpagertab_profilepage);
+        viewPagerTab.setViewPager(viewPager);
+        viewPagerTab.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                Toast.makeText(ProfilePage.this, "Changed to "+position, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
             }
         });
 
@@ -133,5 +178,10 @@ TextView UserNameTxt,TypeUserTxt,EmailUserTxt;
     public void onBackPressed() {
         startActivity(new Intent(getApplicationContext(), HomePageMap.class));
         finish();
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
